@@ -202,168 +202,46 @@ class MedidorApp(ctk.CTk):
 
     def _build_layout(self) -> None:
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        top = ctk.CTkFrame(self, corner_radius=12)
-        top.grid(row=0, column=0, padx=14, pady=(14, 8), sticky="nsew")
-        top.grid_columnconfigure(1, weight=1)
+        content_host = ctk.CTkFrame(self, corner_radius=12)
+        content_host.grid(row=0, column=0, padx=14, pady=(14, 8), sticky="nsew")
+        content_host.grid_columnconfigure(1, weight=1)
+        content_host.grid_rowconfigure(0, weight=1)
 
-        ctk.CTkLabel(top, text="Output CSV").grid(
-            row=0,
-            column=0,
-            padx=(12, 8),
-            pady=12,
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.output_var).grid(
-            row=0,
-            column=1,
-            padx=8,
-            pady=12,
-            sticky="ew",
-        )
-        ctk.CTkButton(top, text="Browse", width=90, command=self._pick_output).grid(
-            row=0,
-            column=2,
-            padx=(8, 12),
-            pady=12,
-            sticky="e",
-        )
+        nav_panel = ctk.CTkFrame(content_host, width=170, corner_radius=10)
+        nav_panel.grid(row=0, column=0, padx=(10, 8), pady=10, sticky="ns")
+        nav_panel.grid_propagate(False)
+        nav_panel.grid_columnconfigure(0, weight=1)
 
-        ctk.CTkLabel(top, text="Timeout (s)").grid(
-            row=1,
-            column=0,
-            padx=(12, 8),
-            pady=(0, 12),
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.timeout_var, width=90).grid(
-            row=1,
-            column=1,
-            padx=8,
-            pady=(0, 12),
-            sticky="w",
-        )
+        pages_host = ctk.CTkFrame(content_host, corner_radius=10)
+        pages_host.grid(row=0, column=1, padx=(0, 10), pady=10, sticky="nsew")
+        pages_host.grid_columnconfigure(0, weight=1)
+        pages_host.grid_rowconfigure(0, weight=1)
 
-        ctk.CTkLabel(top, text="Interval (s)").grid(
-            row=1,
-            column=1,
-            padx=(130, 8),
-            pady=(0, 12),
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.interval_var, width=90).grid(
-            row=1,
-            column=1,
-            padx=(220, 8),
-            pady=(0, 12),
-            sticky="w",
-        )
+        view_names = ["Settings", "Monitor", "Resultados", "Entrenar", "Predicciones", "Modelos"]
+        self.view_frames: dict[str, ctk.CTkFrame] = {}
+        self.view_buttons: dict[str, ctk.CTkButton] = {}
+        for index, view_name in enumerate(view_names):
+            button = ctk.CTkButton(
+                nav_panel,
+                text=view_name,
+                command=lambda name=view_name: self._show_view(name),
+                anchor="w",
+            )
+            button.grid(row=index, column=0, padx=10, pady=(10 if index == 0 else 6, 0), sticky="ew")
+            self.view_buttons[view_name] = button
 
-        ctk.CTkLabel(top, textvariable=self.status_var).grid(
-            row=1,
-            column=2,
-            padx=(8, 12),
-            pady=(0, 12),
-            sticky="e",
-        )
+            frame = ctk.CTkFrame(pages_host, corner_radius=10)
+            frame.grid(row=0, column=0, sticky="nsew")
+            self.view_frames[view_name] = frame
 
-        ctk.CTkLabel(top, text="Storage").grid(
-            row=2,
-            column=0,
-            padx=(12, 8),
-            pady=(0, 8),
-            sticky="w",
-        )
-        ctk.CTkOptionMenu(
-            top,
-            variable=self.storage_var,
-            values=["csv", "postgres", "both"],
-        ).grid(row=2, column=1, padx=8, pady=(0, 8), sticky="w")
+        settings_tab = self.view_frames["Settings"]
+        settings_tab.grid_columnconfigure(0, weight=1)
+        settings_tab.grid_rowconfigure(0, weight=1)
+        self._build_settings_form(settings_tab)
 
-        ctk.CTkLabel(top, text="DB host").grid(
-            row=3,
-            column=0,
-            padx=(12, 8),
-            pady=(0, 6),
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.db_host_var, width=120).grid(
-            row=3,
-            column=1,
-            padx=8,
-            pady=(0, 6),
-            sticky="w",
-        )
-
-        ctk.CTkLabel(top, text="DB port").grid(
-            row=3,
-            column=1,
-            padx=(140, 8),
-            pady=(0, 6),
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.db_port_var, width=80).grid(
-            row=3,
-            column=1,
-            padx=(210, 8),
-            pady=(0, 6),
-            sticky="w",
-        )
-
-        ctk.CTkLabel(top, text="DB name").grid(
-            row=3,
-            column=1,
-            padx=(310, 8),
-            pady=(0, 6),
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.db_name_var, width=100).grid(
-            row=3,
-            column=1,
-            padx=(380, 8),
-            pady=(0, 6),
-            sticky="w",
-        )
-
-        ctk.CTkLabel(top, text="DB user").grid(
-            row=4,
-            column=0,
-            padx=(12, 8),
-            pady=(0, 12),
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.db_user_var, width=120).grid(
-            row=4,
-            column=1,
-            padx=8,
-            pady=(0, 12),
-            sticky="w",
-        )
-        ctk.CTkLabel(top, text="DB password").grid(
-            row=4,
-            column=1,
-            padx=(140, 8),
-            pady=(0, 12),
-            sticky="w",
-        )
-        ctk.CTkEntry(top, textvariable=self.db_password_var, width=160, show="*").grid(
-            row=4,
-            column=1,
-            padx=(230, 8),
-            pady=(0, 12),
-            sticky="w",
-        )
-
-        tabs = ctk.CTkTabview(self, corner_radius=12)
-        tabs.grid(row=1, column=0, padx=14, pady=8, sticky="nsew")
-        tabs.add("Monitor")
-        tabs.add("Resultados")
-        tabs.add("Entrenar")
-        tabs.add("Predicciones")
-        tabs.add("Modelos")
-
-        monitor_tab = tabs.tab("Monitor")
+        monitor_tab = self.view_frames["Monitor"]
         monitor_tab.grid_columnconfigure(0, weight=1)
         monitor_tab.grid_rowconfigure(1, weight=1)
 
@@ -412,7 +290,7 @@ class MedidorApp(ctk.CTk):
         self.log_box.grid(row=1, column=0, padx=12, pady=(0, 12), sticky="nsew")
         self.log_box.configure(state="disabled")
 
-        results_tab = tabs.tab("Resultados")
+        results_tab = self.view_frames["Resultados"]
         results_tab.grid_columnconfigure(0, weight=1)
         results_tab.grid_rowconfigure(1, weight=1)
 
@@ -440,7 +318,7 @@ class MedidorApp(ctk.CTk):
         self.report_box.grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
         self.report_box.configure(state="disabled")
 
-        train_tab = tabs.tab("Entrenar")
+        train_tab = self.view_frames["Entrenar"]
         train_tab.grid_columnconfigure(0, weight=1)
         train_tab.grid_rowconfigure(1, weight=1)
 
@@ -570,7 +448,7 @@ class MedidorApp(ctk.CTk):
         self.train_box.grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
         self.train_box.configure(state="disabled")
 
-        predict_tab = tabs.tab("Predicciones")
+        predict_tab = self.view_frames["Predicciones"]
         predict_tab.grid_columnconfigure(0, weight=1)
         predict_tab.grid_rowconfigure(1, weight=0)
         predict_tab.grid_rowconfigure(2, weight=2)
@@ -791,7 +669,7 @@ class MedidorApp(ctk.CTk):
         self.predict_box.grid(row=5, column=0, padx=10, pady=(0, 10), sticky="nsew")
         self.predict_box.configure(state="disabled")
 
-        models_tab = tabs.tab("Modelos")
+        models_tab = self.view_frames["Modelos"]
         models_tab.grid_columnconfigure(0, weight=1)
         models_tab.grid_rowconfigure(1, weight=1)
 
@@ -837,8 +715,10 @@ class MedidorApp(ctk.CTk):
         models_scroll.grid(row=0, column=1, padx=(0, 10), pady=10, sticky="ns")
         self.model_registry_tree.configure(yscrollcommand=models_scroll.set)
 
+        self._show_view("Monitor")
+
         actions = ctk.CTkFrame(self, fg_color="transparent")
-        actions.grid(row=2, column=0, padx=14, pady=(4, 14), sticky="ew")
+        actions.grid(row=1, column=0, padx=14, pady=(4, 14), sticky="ew")
         actions.grid_columnconfigure((0, 1, 2, 3), weight=1)
 
         self.btn_one = ctk.CTkButton(
@@ -877,6 +757,168 @@ class MedidorApp(ctk.CTk):
         self._refresh_model_health()
         self._refresh_last_predicted_download()
         self._refresh_model_registry_table()
+
+    def _build_settings_form(self, parent: ctk.CTkFrame) -> None:
+        form = ctk.CTkFrame(parent, corner_radius=12)
+        form.grid(row=0, column=0, padx=14, pady=10, sticky="nsew")
+        form.grid_columnconfigure(1, weight=1)
+
+        ctk.CTkLabel(form, text="Output CSV").grid(
+            row=0,
+            column=0,
+            padx=(12, 8),
+            pady=12,
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.output_var).grid(
+            row=0,
+            column=1,
+            padx=8,
+            pady=12,
+            sticky="ew",
+        )
+        ctk.CTkButton(form, text="Browse", width=90, command=self._pick_output).grid(
+            row=0,
+            column=2,
+            padx=(8, 12),
+            pady=12,
+            sticky="e",
+        )
+
+        ctk.CTkLabel(form, text="Timeout (s)").grid(
+            row=1,
+            column=0,
+            padx=(12, 8),
+            pady=(0, 12),
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.timeout_var, width=90).grid(
+            row=1,
+            column=1,
+            padx=8,
+            pady=(0, 12),
+            sticky="w",
+        )
+
+        ctk.CTkLabel(form, text="Interval (s)").grid(
+            row=1,
+            column=1,
+            padx=(130, 8),
+            pady=(0, 12),
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.interval_var, width=90).grid(
+            row=1,
+            column=1,
+            padx=(220, 8),
+            pady=(0, 12),
+            sticky="w",
+        )
+
+        ctk.CTkLabel(form, textvariable=self.status_var).grid(
+            row=1,
+            column=2,
+            padx=(8, 12),
+            pady=(0, 12),
+            sticky="e",
+        )
+
+        ctk.CTkLabel(form, text="Storage").grid(
+            row=2,
+            column=0,
+            padx=(12, 8),
+            pady=(0, 8),
+            sticky="w",
+        )
+        ctk.CTkOptionMenu(
+            form,
+            variable=self.storage_var,
+            values=["csv", "postgres", "both"],
+        ).grid(row=2, column=1, padx=8, pady=(0, 8), sticky="w")
+
+        ctk.CTkLabel(form, text="DB host").grid(
+            row=3,
+            column=0,
+            padx=(12, 8),
+            pady=(0, 6),
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.db_host_var, width=120).grid(
+            row=3,
+            column=1,
+            padx=8,
+            pady=(0, 6),
+            sticky="w",
+        )
+
+        ctk.CTkLabel(form, text="DB port").grid(
+            row=3,
+            column=1,
+            padx=(140, 8),
+            pady=(0, 6),
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.db_port_var, width=80).grid(
+            row=3,
+            column=1,
+            padx=(210, 8),
+            pady=(0, 6),
+            sticky="w",
+        )
+
+        ctk.CTkLabel(form, text="DB name").grid(
+            row=3,
+            column=1,
+            padx=(310, 8),
+            pady=(0, 6),
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.db_name_var, width=100).grid(
+            row=3,
+            column=1,
+            padx=(380, 8),
+            pady=(0, 6),
+            sticky="w",
+        )
+
+        ctk.CTkLabel(form, text="DB user").grid(
+            row=4,
+            column=0,
+            padx=(12, 8),
+            pady=(0, 12),
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.db_user_var, width=120).grid(
+            row=4,
+            column=1,
+            padx=8,
+            pady=(0, 12),
+            sticky="w",
+        )
+        ctk.CTkLabel(form, text="DB password").grid(
+            row=4,
+            column=1,
+            padx=(140, 8),
+            pady=(0, 12),
+            sticky="w",
+        )
+        ctk.CTkEntry(form, textvariable=self.db_password_var, width=160, show="*").grid(
+            row=4,
+            column=1,
+            padx=(230, 8),
+            pady=(0, 12),
+            sticky="w",
+        )
+
+    def _show_view(self, view_name: str) -> None:
+        for name, frame in self.view_frames.items():
+            if name == view_name:
+                frame.grid()
+            else:
+                frame.grid_remove()
+
+        for name, button in self.view_buttons.items():
+            button.configure(state="disabled" if name == view_name else "normal")
 
     def _metric_card(
         self,
