@@ -1,0 +1,10 @@
+{
+  "samples_total": 213,
+  "samples_train": 170,
+  "samples_test": 43,
+  "mae_baseline": 145.96288372093025,
+  "rmse_baseline": 202.72292696511246,
+  "mae_model": 149.7002866316263,
+  "rmse_model": 166.0135479095352,
+  "model_version": "v20260212T173210Z_t-download_mbps_h-1_l-5"
+}
