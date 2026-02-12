@@ -1,0 +1,77 @@
+2026-02-12 14:04:54,708 | INFO | MainThread | MEDIDOR GUI startup
+2026-02-12 14:04:55,653 | ERROR | MainThread | Model health refresh failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 1650, in _refresh_model_health
+    metrics = self._load_model_health(limit=60)
+  File "C:\Projects\medidor\gui.py", line 1544, in _load_model_health
+    raise RuntimeError('Missing dependency "psycopg[binary]".')
+RuntimeError: Missing dependency "psycopg[binary]".
+2026-02-12 14:04:55,656 | ERROR | MainThread | Latest prediction refresh failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 1687, in _refresh_last_predicted_download
+    value, predicted_ts, model_version = self._load_latest_download_prediction()
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Projects\medidor\gui.py", line 1511, in _load_latest_download_prediction
+    raise RuntimeError('Missing dependency "psycopg[binary]".')
+RuntimeError: Missing dependency "psycopg[binary]".
+2026-02-12 14:05:31,505 | ERROR | Thread-1 (_worker_loop) | Sample collection/storage failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\main.py", line 26, in <module>
+    import psycopg
+ModuleNotFoundError: No module named 'psycopg'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 1161, in _collect_and_store
+    append_sample_postgres(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        sample=sample,
+        ^^^^^^^^^^^^^^
+    ...<4 lines>...
+        password=self.db_password_var.get(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Projects\medidor\main.py", line 121, in append_sample_postgres
+    _append_speed_sample_postgres(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sample=sample,
+        ^^^^^^^^^^^^^^
+    ...<6 lines>...
+        index_name="ux_internet_speed_samples_natural",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Projects\medidor\main.py", line 258, in _append_speed_sample_postgres
+    raise RuntimeError(message) from POSTGRES_IMPORT_ERROR
+RuntimeError: Missing dependency 'psycopg'. Install with:
+  pip install "psycopg[binary]"
+2026-02-12 14:06:15,630 | INFO | MainThread | MEDIDOR GUI startup
+2026-02-12 14:06:16,347 | ERROR | MainThread | Model health refresh failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 1650, in _refresh_model_health
+    metrics = self._load_model_health(limit=60)
+  File "C:\Projects\medidor\gui.py", line 1596, in _load_model_health
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-12 14:06:16,446 | ERROR | MainThread | Latest prediction refresh failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 1687, in _refresh_last_predicted_download
+    value, predicted_ts, model_version = self._load_latest_download_prediction()
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Projects\medidor\gui.py", line 1530, in _load_latest_download_prediction
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied

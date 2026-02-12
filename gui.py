@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import datetime as dt
+import logging
 import math
 import pathlib
 import queue
+import sys
 import threading
 from dataclasses import asdict
 from tkinter import filedialog
@@ -67,6 +69,46 @@ from predict_next import (
     load_data as predict_load_data,
     load_model as predict_load_model,
 )
+
+APP_LOG_PATH = pathlib.Path(__file__).with_name("app.log")
+LOGGER = logging.getLogger("medidor.app")
+
+
+def _configure_error_logging() -> None:
+    if LOGGER.handlers:
+        return
+    APP_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    file_handler = logging.FileHandler(APP_LOG_PATH, encoding="utf-8")
+    file_handler.setFormatter(
+        logging.Formatter(
+            "%(asctime)s | %(levelname)s | %(threadName)s | %(message)s",
+        ),
+    )
+    LOGGER.setLevel(logging.INFO)
+    LOGGER.addHandler(file_handler)
+    LOGGER.propagate = False
+
+
+def _install_exception_hooks() -> None:
+    def _log_uncaught_exception(
+        exc_type: type[BaseException],
+        exc_value: BaseException,
+        exc_traceback: object,
+    ) -> None:
+        LOGGER.critical(
+            "Uncaught exception",
+            exc_info=(exc_type, exc_value, exc_traceback),
+        )
+
+    def _log_uncaught_thread_exception(args: threading.ExceptHookArgs) -> None:
+        thread_name = args.thread.name if args.thread is not None else "unknown"
+        LOGGER.critical(
+            f"Uncaught thread exception in {thread_name}",
+            exc_info=(args.exc_type, args.exc_value, args.exc_traceback),
+        )
+
+    sys.excepthook = _log_uncaught_exception
+    threading.excepthook = _log_uncaught_thread_exception
 
 
 class MedidorApp(ctk.CTk):
@@ -802,6 +844,7 @@ class MedidorApp(ctk.CTk):
             )
             self._set_report_text(report)
         except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("CSV analysis failed")
             self._set_report_text(f"Could not analyze CSV:\n{exc}")
 
     def _set_running_ui(self, running: bool) -> None:
@@ -1007,6 +1050,7 @@ class MedidorApp(ctk.CTk):
                 metrics_output=metrics_output,
             )
         except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Model training failed")
             self.ui_queue.put(("training_error", str(exc)))
             return
 
@@ -1081,8 +1125,10 @@ class MedidorApp(ctk.CTk):
                     f"{self.db_name_var.get()})"
                 )
             except Exception as db_exc:  # noqa: BLE001
+                LOGGER.exception("Saving prediction to PostgreSQL failed")
                 db_status = f"Could not save prediction to PostgreSQL: {db_exc}"
         except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Prediction failed")
             self.ui_queue.put(("prediction_error", str(exc)))
             return
 
@@ -1121,6 +1167,7 @@ class MedidorApp(ctk.CTk):
                     password=self.db_password_var.get(),
                 )
         except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Sample collection/storage failed")
             self.ui_queue.put(("error", str(exc)))
             return
 
@@ -1407,6 +1454,7 @@ class MedidorApp(ctk.CTk):
             self.predict_canvas.draw_idle()
             self.predict_chart_status_var.set(chart_status)
         except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Prediction chart refresh failed")
             self.predict_chart_status_var.set(f"Chart error: {exc}")
 
     def _load_prediction_history(self, limit: int = 1000) -> tuple[list, list[float]]:
@@ -1624,6 +1672,7 @@ class MedidorApp(ctk.CTk):
                 self.model_health_badge_var.set("Status: TIED with baseline")
                 self.model_health_badge_label.configure(text_color="#8d8d8d")
         except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Model health refresh failed")
             self.model_health_status_var.set(f"Model health unavailable: {exc}")
             self.model_health_mae_var.set("MAE model: -")
             self.model_health_rmse_var.set("RMSE model: -")
@@ -1640,6 +1689,7 @@ class MedidorApp(ctk.CTk):
             self.last_pred_model_version_var.set(model_version)
             self._set_prediction_valid_until(predicted_ts)
         except Exception:
+            LOGGER.exception("Latest prediction refresh failed")
             self.last_pred_down_var.set("-")
             self.last_pred_valid_var.set("-")
             self.last_pred_model_version_var.set("-")
@@ -1657,6 +1707,7 @@ class MedidorApp(ctk.CTk):
             self.last_prediction_valid_until_utc = predicted_dt
             self._refresh_prediction_validity_display()
         except Exception:
+            LOGGER.exception("Prediction validity parsing failed")
             self.last_prediction_valid_until_utc = None
             self.last_pred_valid_var.set("-")
 
@@ -1738,7 +1789,20 @@ class MedidorApp(ctk.CTk):
                 "Prediction history chart refreshed (last 1 hour) from PostgreSQL.",
             )
         except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Prediction history chart refresh failed")
             self.predict_history_chart_status_var.set(f"Prediction history error: {exc}")
+
+    def report_callback_exception(
+        self,
+        exc: type[BaseException],
+        value: BaseException,
+        traceback: object,
+    ) -> None:
+        LOGGER.error(
+            "Tk callback exception",
+            exc_info=(exc, value, traceback),
+        )
+        super().report_callback_exception(exc, value, traceback)
 
     def _build_training_explanation(self, metrics: dict[str, object]) -> str:
         mae_baseline = float(metrics["mae_baseline"])
@@ -1781,6 +1845,9 @@ class MedidorApp(ctk.CTk):
 
 def main() -> None:
     """Launch MEDIDOR GUI."""
+    _configure_error_logging()
+    _install_exception_hooks()
+    LOGGER.info("MEDIDOR GUI startup")
     app = MedidorApp()
     app.mainloop()
 
