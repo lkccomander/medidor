@@ -1,0 +1,24 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+
+# Logs
+*.log
+app.log
+
+# IDE
+.vscode/
+
+# Local environment files
+.env
+.env.*
+
+# Data/model artifacts
+models/
+*.joblib
+*.csv
