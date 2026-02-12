@@ -117,3 +117,41 @@ psycopg.OperationalError: connection failed: connection to server at "127.0.0.1"
 Multiple connection attempts failed. All failures were:
 - host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
 - host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-12 14:30:06,284 | ERROR | Thread-1336 (_worker_loop) | Sample collection/storage failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\.venv\Lib\site-packages\speedtest.py", line 1493, in get_best_server
+    fastest = sorted(results.keys())[0]
+              ~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Projects\medidor\gui.py", line 1154, in _collect_and_store
+    sample = collect_sample(timeout=timeout)
+  File "c:\Projects\medidor\main.py", line 71, in collect_sample
+    st.get_best_server()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\speedtest.py", line 1495, in get_best_server
+    raise SpeedtestBestServerFailure('Unable to connect to servers to '
+                                     'test latency.')
+speedtest.SpeedtestBestServerFailure: Unable to connect to servers to test latency.
+2026-02-12 14:30:12,855 | ERROR | Thread-1336 (_worker_loop) | Sample collection/storage failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\.venv\Lib\site-packages\speedtest.py", line 1493, in get_best_server
+    fastest = sorted(results.keys())[0]
+              ~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Projects\medidor\gui.py", line 1154, in _collect_and_store
+    sample = collect_sample(timeout=timeout)
+  File "c:\Projects\medidor\main.py", line 71, in collect_sample
+    st.get_best_server()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\speedtest.py", line 1495, in get_best_server
+    raise SpeedtestBestServerFailure('Unable to connect to servers to '
+                                     'test latency.')
+speedtest.SpeedtestBestServerFailure: Unable to connect to servers to test latency.
