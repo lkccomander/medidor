@@ -107,7 +107,8 @@ def build_latest_feature_row(
 
     for metric in TARGET_COLUMNS:
         for lag in range(1, lags + 1):
-            row[f"{metric}_lag_{lag}"] = float(frame.iloc[-lag][metric])
+            # Match training semantics: lag_1 is previous row (t-1), not current row (t).
+            row[f"{metric}_lag_{lag}"] = float(frame.iloc[-(lag + 1)][metric])
         series = frame[metric]
         for window in ROLLING_WINDOWS:
             values = series.iloc[-window:]

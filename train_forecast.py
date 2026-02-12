@@ -123,24 +123,28 @@ def build_training_frame(
 
     work = frame.copy()
     ts = work["timestamp_utc"]
-    work["hour_sin"] = np.sin(2 * np.pi * ts.dt.hour / 24)
-    work["hour_cos"] = np.cos(2 * np.pi * ts.dt.hour / 24)
-    work["weekday_sin"] = np.sin(2 * np.pi * ts.dt.weekday / 7)
-    work["weekday_cos"] = np.cos(2 * np.pi * ts.dt.weekday / 7)
+    feature_data: dict[str, pd.Series | np.ndarray] = {
+        "hour_sin": np.sin(2 * np.pi * ts.dt.hour / 24),
+        "hour_cos": np.cos(2 * np.pi * ts.dt.hour / 24),
+        "weekday_sin": np.sin(2 * np.pi * ts.dt.weekday / 7),
+        "weekday_cos": np.cos(2 * np.pi * ts.dt.weekday / 7),
+    }
 
     for metric in TARGET_COLUMNS:
+        series = work[metric]
         for lag in range(1, lags + 1):
-            work[f"{metric}_lag_{lag}"] = work[metric].shift(lag)
+            feature_data[f"{metric}_lag_{lag}"] = series.shift(lag)
         for window in ROLLING_WINDOWS:
-            rolling = work[metric].rolling(window=window, min_periods=window)
-            work[f"{metric}_roll_mean_{window}"] = rolling.mean()
-            work[f"{metric}_roll_std_{window}"] = rolling.std()
-            work[f"{metric}_roll_min_{window}"] = rolling.min()
-            work[f"{metric}_roll_max_{window}"] = rolling.max()
+            rolling = series.rolling(window=window, min_periods=window)
+            feature_data[f"{metric}_roll_mean_{window}"] = rolling.mean()
+            feature_data[f"{metric}_roll_std_{window}"] = rolling.std()
+            feature_data[f"{metric}_roll_min_{window}"] = rolling.min()
+            feature_data[f"{metric}_roll_max_{window}"] = rolling.max()
 
         # First-order trend to capture short-term acceleration/deceleration.
-        work[f"{metric}_diff_1"] = work[metric].diff(periods=1)
+        feature_data[f"{metric}_diff_1"] = series.diff(periods=1)
 
+    work = pd.concat([work, pd.DataFrame(feature_data, index=work.index)], axis=1)
     work["target_next"] = work[target].shift(-horizon)
     model_frame = work.dropna().reset_index(drop=True)
 

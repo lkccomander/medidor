@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import csv
 import logging
 import math
 import pathlib
@@ -10,7 +11,7 @@ import queue
 import sys
 import threading
 from dataclasses import asdict
-from tkinter import filedialog
+from tkinter import filedialog, ttk
 
 try:
     import customtkinter as ctk
@@ -71,6 +72,7 @@ from predict_next import (
 )
 
 APP_LOG_PATH = pathlib.Path(__file__).with_name("app.log")
+MODEL_REGISTRY_PATH = TRAIN_DEFAULT_MODEL_DIR / "model_registry.csv"
 LOGGER = logging.getLogger("medidor.app")
 
 
@@ -169,6 +171,9 @@ class MedidorApp(ctk.CTk):
         self.predict_chart_status_var = ctk.StringVar(
             value="Chart: waiting for prediction.",
         )
+        self.predict_combined_chart_status_var = ctk.StringVar(
+            value="Combined chart: waiting for data.",
+        )
         self.model_health_status_var = ctk.StringVar(value="Model health: waiting for data.")
         self.model_health_mae_var = ctk.StringVar(value="-")
         self.model_health_rmse_var = ctk.StringVar(value="-")
@@ -185,6 +190,11 @@ class MedidorApp(ctk.CTk):
         self.predict_history_figure: Figure | None = None
         self.predict_history_axis = None
         self.predict_history_canvas = None
+        self.predict_combined_figure: Figure | None = None
+        self.predict_combined_axis = None
+        self.predict_combined_canvas = None
+        self.model_registry_status_var = ctk.StringVar(value="Model registry: waiting for data.")
+        self.model_registry_tree: ttk.Treeview | None = None
 
         self._build_layout()
         self._poll_ui_queue()
@@ -351,6 +361,7 @@ class MedidorApp(ctk.CTk):
         tabs.add("Resultados")
         tabs.add("Entrenar")
         tabs.add("Predicciones")
+        tabs.add("Modelos")
 
         monitor_tab = tabs.tab("Monitor")
         monitor_tab.grid_columnconfigure(0, weight=1)
@@ -564,7 +575,8 @@ class MedidorApp(ctk.CTk):
         predict_tab.grid_rowconfigure(1, weight=0)
         predict_tab.grid_rowconfigure(2, weight=2)
         predict_tab.grid_rowconfigure(3, weight=2)
-        predict_tab.grid_rowconfigure(4, weight=1)
+        predict_tab.grid_rowconfigure(4, weight=2)
+        predict_tab.grid_rowconfigure(5, weight=1)
 
         predict_controls = ctk.CTkFrame(predict_tab, corner_radius=10)
         predict_controls.grid(row=0, column=0, padx=10, pady=(10, 6), sticky="ew")
@@ -739,9 +751,91 @@ class MedidorApp(ctk.CTk):
                 sticky="nsew",
             )
 
+        predict_combined_chart_panel = ctk.CTkFrame(predict_tab, corner_radius=10)
+        predict_combined_chart_panel.grid(row=4, column=0, padx=10, pady=(0, 6), sticky="nsew")
+        predict_combined_chart_panel.grid_columnconfigure(0, weight=1)
+        predict_combined_chart_panel.grid_rowconfigure(1, weight=1)
+
+        ctk.CTkLabel(
+            predict_combined_chart_panel,
+            textvariable=self.predict_combined_chart_status_var,
+            anchor="w",
+        ).grid(row=0, column=0, padx=10, pady=(8, 4), sticky="ew")
+
+        if Figure is None or FigureCanvasTkAgg is None:
+            ctk.CTkLabel(
+                predict_combined_chart_panel,
+                text="Install matplotlib to display combined chart.",
+                anchor="w",
+            ).grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
+        else:
+            self.predict_combined_figure = Figure(figsize=(6.8, 2.6), dpi=100)
+            self.predict_combined_axis = self.predict_combined_figure.add_subplot(111)
+            self.predict_combined_axis.set_title("Combined download + prediction history")
+            self.predict_combined_axis.set_ylabel("Mbps")
+            self.predict_combined_axis.grid(alpha=0.25)
+
+            self.predict_combined_canvas = FigureCanvasTkAgg(
+                self.predict_combined_figure,
+                master=predict_combined_chart_panel,
+            )
+            self.predict_combined_canvas.get_tk_widget().grid(
+                row=1,
+                column=0,
+                padx=10,
+                pady=(0, 10),
+                sticky="nsew",
+            )
+
         self.predict_box = ctk.CTkTextbox(predict_tab)
-        self.predict_box.grid(row=4, column=0, padx=10, pady=(0, 10), sticky="nsew")
+        self.predict_box.grid(row=5, column=0, padx=10, pady=(0, 10), sticky="nsew")
         self.predict_box.configure(state="disabled")
+
+        models_tab = tabs.tab("Modelos")
+        models_tab.grid_columnconfigure(0, weight=1)
+        models_tab.grid_rowconfigure(1, weight=1)
+
+        models_controls = ctk.CTkFrame(models_tab, corner_radius=10)
+        models_controls.grid(row=0, column=0, padx=10, pady=(10, 6), sticky="ew")
+        models_controls.grid_columnconfigure(0, weight=1)
+        ctk.CTkLabel(
+            models_controls,
+            textvariable=self.model_registry_status_var,
+            anchor="w",
+        ).grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        ctk.CTkButton(
+            models_controls,
+            text="Refresh",
+            command=self._refresh_model_registry_table,
+            width=100,
+        ).grid(row=0, column=1, padx=(6, 10), pady=10, sticky="e")
+
+        models_table_frame = ctk.CTkFrame(models_tab, corner_radius=10)
+        models_table_frame.grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
+        models_table_frame.grid_columnconfigure(0, weight=1)
+        models_table_frame.grid_rowconfigure(0, weight=1)
+
+        columns = ("id", "model_name", "model_path")
+        self.model_registry_tree = ttk.Treeview(
+            models_table_frame,
+            columns=columns,
+            show="headings",
+        )
+        self.model_registry_tree.heading("id", text="ID")
+        self.model_registry_tree.heading("model_name", text="Model Name")
+        self.model_registry_tree.heading("model_path", text="Model Path")
+        self.model_registry_tree.column("id", width=70, anchor="center", stretch=False)
+        self.model_registry_tree.column("model_name", width=220, anchor="w", stretch=False)
+        self.model_registry_tree.column("model_path", width=760, anchor="w", stretch=True)
+        self.model_registry_tree.grid(row=0, column=0, padx=(10, 0), pady=10, sticky="nsew")
+
+        models_scroll = ttk.Scrollbar(
+            models_table_frame,
+            orient="vertical",
+            command=self.model_registry_tree.yview,
+        )
+        models_scroll.grid(row=0, column=1, padx=(0, 10), pady=10, sticky="ns")
+        self.model_registry_tree.configure(yscrollcommand=models_scroll.set)
 
         actions = ctk.CTkFrame(self, fg_color="transparent")
         actions.grid(row=2, column=0, padx=14, pady=(4, 14), sticky="ew")
@@ -779,8 +873,10 @@ class MedidorApp(ctk.CTk):
         self._refresh_analysis_report()
         self._refresh_prediction_chart(pathlib.Path(self.predict_input_var.get()))
         self._refresh_prediction_history_chart()
+        self._refresh_prediction_combined_chart(pathlib.Path(self.predict_input_var.get()))
         self._refresh_model_health()
         self._refresh_last_predicted_download()
+        self._refresh_model_registry_table()
 
     def _metric_card(
         self,
@@ -870,10 +966,15 @@ class MedidorApp(ctk.CTk):
         return sorted(model_paths, key=lambda path: path.stat().st_mtime, reverse=True)
 
     def _refresh_model_picker(self, preferred: str | None = None) -> None:
-        model_paths = self._list_model_paths()
-        if model_paths:
-            options = [str(path) for path in model_paths]
-        else:
+        self._sync_model_registry_with_files()
+        rows = self._load_model_registry_rows()
+        rows_sorted = sorted(
+            rows,
+            key=lambda row: int(row.get("id", "0")) if row.get("id", "0").isdigit() else 0,
+            reverse=True,
+        )
+        options = [row["model_name"] for row in rows_sorted if row.get("model_name")]
+        if not options:
             options = ["No models found"]
 
         self.predict_model_picker.configure(values=options)
@@ -881,6 +982,132 @@ class MedidorApp(ctk.CTk):
         if selected not in options:
             selected = options[0]
         self.predict_model_var.set(selected)
+
+    def _find_model_registry_row_by_name(self, model_name: str) -> dict[str, str] | None:
+        self._sync_model_registry_with_files()
+        rows = self._load_model_registry_rows()
+        for row in rows:
+            if row.get("model_name") == model_name:
+                return row
+        return None
+
+    def _load_model_registry_rows(self) -> list[dict[str, str]]:
+        if not MODEL_REGISTRY_PATH.exists():
+            return []
+        rows: list[dict[str, str]] = []
+        with MODEL_REGISTRY_PATH.open("r", encoding="utf-8", newline="") as file_handle:
+            reader = csv.DictReader(file_handle)
+            for row in reader:
+                rows.append(
+                    {
+                        "id": str(row.get("id", "")).strip(),
+                        "model_name": str(row.get("model_name", "")).strip(),
+                        "model_path": str(row.get("model_path", "")).strip(),
+                    },
+                )
+        return rows
+
+    def _save_model_registry_rows(self, rows: list[dict[str, str]]) -> None:
+        MODEL_REGISTRY_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with MODEL_REGISTRY_PATH.open("w", encoding="utf-8", newline="") as file_handle:
+            writer = csv.DictWriter(file_handle, fieldnames=["id", "model_name", "model_path"])
+            writer.writeheader()
+            writer.writerows(rows)
+
+    def _next_download_model_name(self, rows: list[dict[str, str]]) -> str:
+        versions: list[tuple[int, int, int]] = []
+        prefix = "Download Model v"
+        for row in rows:
+            model_name = row.get("model_name", "")
+            if not model_name.startswith(prefix):
+                continue
+            raw_version = model_name.removeprefix(prefix)
+            parts = raw_version.split(".")
+            if len(parts) != 3 or not all(part.isdigit() for part in parts):
+                continue
+            versions.append((int(parts[0]), int(parts[1]), int(parts[2])))
+
+        if not versions:
+            return "Download Model v01.00.00"
+
+        major, minor, patch = max(versions)
+        patch += 1
+        if patch > 99:
+            patch = 0
+            minor += 1
+        if minor > 99:
+            minor = 0
+            major += 1
+        return f"Download Model v{major:02d}.{minor:02d}.{patch:02d}"
+
+    def _register_model_in_registry(self, model_path_raw: str) -> dict[str, str]:
+        rows = self._load_model_registry_rows()
+        model_path = str(pathlib.Path(model_path_raw).expanduser().resolve())
+        for row in rows:
+            if row.get("model_path") == model_path:
+                return row
+
+        max_id = 0
+        for row in rows:
+            try:
+                max_id = max(max_id, int(row.get("id", "0")))
+            except ValueError:
+                continue
+        new_row = {
+            "id": str(max_id + 1),
+            "model_name": self._next_download_model_name(rows),
+            "model_path": model_path,
+        }
+        rows.append(new_row)
+        self._save_model_registry_rows(rows)
+        return new_row
+
+    def _sync_model_registry_with_files(self) -> None:
+        rows = self._load_model_registry_rows()
+        known_paths = {row.get("model_path", "") for row in rows}
+        changed = False
+        for model_file in self._list_model_paths():
+            resolved = str(model_file.resolve())
+            if resolved in known_paths:
+                continue
+            next_id = 1
+            for row in rows:
+                try:
+                    next_id = max(next_id, int(row.get("id", "0")) + 1)
+                except ValueError:
+                    continue
+            new_row = {
+                "id": str(next_id),
+                "model_name": self._next_download_model_name(rows),
+                "model_path": resolved,
+            }
+            rows.append(new_row)
+            known_paths.add(resolved)
+            changed = True
+        if changed:
+            self._save_model_registry_rows(rows)
+
+    def _refresh_model_registry_table(self) -> None:
+        if self.model_registry_tree is None:
+            return
+        try:
+            self._sync_model_registry_with_files()
+            rows = self._load_model_registry_rows()
+            for item_id in self.model_registry_tree.get_children():
+                self.model_registry_tree.delete(item_id)
+            for row in rows:
+                self.model_registry_tree.insert(
+                    "",
+                    "end",
+                    values=(row["id"], row["model_name"], row["model_path"]),
+                )
+            self.model_registry_status_var.set(
+                f"Model registry: {len(rows)} models | {MODEL_REGISTRY_PATH.resolve()}",
+            )
+            self._refresh_model_picker(preferred=self.predict_model_var.get())
+        except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Model registry refresh failed")
+            self.model_registry_status_var.set(f"Model registry error: {exc}")
 
     def _parse_positive_int(self, raw: str, field_name: str) -> int:
         value = int(raw)
@@ -977,11 +1204,25 @@ class MedidorApp(ctk.CTk):
             return
 
         input_path = pathlib.Path(self.predict_input_var.get())
-        model_raw = self.predict_model_var.get().strip()
-        if not model_raw or model_raw == "No models found":
+        selected_model_name = self.predict_model_var.get().strip()
+        if not selected_model_name or selected_model_name == "No models found":
             self._append_log("[error] No model selected. Train or refresh model list first.")
             return
-        model_path = pathlib.Path(model_raw)
+        selected_row = self._find_model_registry_row_by_name(selected_model_name)
+        if selected_row is None:
+            self._append_log(
+                f"[error] Selected model name was not found in registry: {selected_model_name}",
+            )
+            self._refresh_model_picker()
+            return
+        model_path_raw = str(selected_row.get("model_path", "")).strip()
+        if not model_path_raw:
+            self._append_log(
+                f"[error] Selected model has no path in registry: {selected_model_name}",
+            )
+            self._refresh_model_picker()
+            return
+        model_path = pathlib.Path(model_path_raw)
         if not model_path.exists():
             self._append_log(f"[error] Selected model file not found: {model_path}")
             self._refresh_model_picker()
@@ -989,7 +1230,8 @@ class MedidorApp(ctk.CTk):
 
         self._set_prediction_ui(True)
         self._append_log(
-            f"[info] Prediction started (input={input_path}, model={model_path}).",
+            "[info] Prediction started "
+            f"(input={input_path}, model_name={selected_model_name}, model_path={model_path}).",
         )
         self.worker_thread = threading.Thread(
             target=self._worker_predict,
@@ -1210,7 +1452,19 @@ class MedidorApp(ctk.CTk):
                 elif event == "training_done":
                     if isinstance(payload, dict):
                         explanation = self._build_training_explanation(payload)
-                        self._refresh_model_picker(preferred=payload["versioned_model_output"])
+                        try:
+                            registry_row = self._register_model_in_registry(
+                                str(payload["versioned_model_output"]),
+                            )
+                            self._refresh_model_picker(preferred=registry_row["model_name"])
+                            self._refresh_model_registry_table()
+                            self._append_log(
+                                "[info] Model registry updated "
+                                f"(id={registry_row['id']}, name={registry_row['model_name']}).",
+                            )
+                        except Exception as registry_exc:  # noqa: BLE001
+                            LOGGER.exception("Model registry update failed")
+                            self._append_log(f"[error] Model registry update failed: {registry_exc}")
                         self._append_log(
                             (
                                 "[ok] Training completed "
@@ -1259,6 +1513,10 @@ class MedidorApp(ctk.CTk):
                             prediction_payload=payload,
                         )
                         self._refresh_prediction_history_chart()
+                        self._refresh_prediction_combined_chart(
+                            pathlib.Path(payload["input_path"]),
+                            prediction_payload=payload,
+                        )
                         self._refresh_model_health()
                         self._append_log(
                             (
@@ -1791,6 +2049,103 @@ class MedidorApp(ctk.CTk):
         except Exception as exc:  # noqa: BLE001
             LOGGER.exception("Prediction history chart refresh failed")
             self.predict_history_chart_status_var.set(f"Prediction history error: {exc}")
+
+    def _refresh_prediction_combined_chart(
+        self,
+        input_path: pathlib.Path,
+        prediction_payload: dict[str, object] | None = None,
+    ) -> None:
+        if (
+            self.predict_combined_figure is None
+            or self.predict_combined_axis is None
+            or self.predict_combined_canvas is None
+        ):
+            self.predict_combined_chart_status_var.set(
+                "Combined chart unavailable (matplotlib not installed).",
+            )
+            return
+        try:
+            frame = predict_load_data(input_path)
+            if frame.empty:
+                raise ValueError("CSV has no rows.")
+
+            latest_ts_all = frame.iloc[-1]["timestamp_utc"]
+            window_start = latest_ts_all - dt.timedelta(hours=1)
+            history = frame[frame["timestamp_utc"] >= window_start].copy()
+            if history.empty:
+                history = frame.tail(1).copy()
+
+            self.predict_combined_axis.clear()
+            self.predict_combined_axis.plot(
+                history["timestamp_utc"],
+                history["download_mbps"],
+                color="#0a84ff",
+                linewidth=1.8,
+                label="download history",
+            )
+
+            prediction_history_loaded = False
+            try:
+                pred_timestamps, pred_values = self._load_prediction_history(limit=1000)
+                if pred_timestamps:
+                    self.predict_combined_axis.plot(
+                        pred_timestamps,
+                        pred_values,
+                        color="#d62828",
+                        linewidth=1.4,
+                        marker="o",
+                        markersize=2.5,
+                        alpha=0.9,
+                        label="prediction history",
+                    )
+                    prediction_history_loaded = True
+            except Exception:
+                prediction_history_loaded = False
+
+            if prediction_payload is not None:
+                target = str(prediction_payload.get("target", ""))
+                prediction = float(prediction_payload.get("prediction", 0.0))
+                horizon = int(prediction_payload.get("horizon", 1))
+                if target == "download_mbps":
+                    latest_ts = history.iloc[-1]["timestamp_utc"]
+                    latest_download = float(history.iloc[-1]["download_mbps"])
+                    if len(history) >= 2:
+                        delta = latest_ts - history.iloc[-2]["timestamp_utc"]
+                        if delta <= dt.timedelta(0):
+                            delta = dt.timedelta(minutes=1)
+                    else:
+                        delta = dt.timedelta(minutes=1)
+                    predicted_ts = latest_ts + (delta * max(horizon, 1))
+                    self.predict_combined_axis.plot(
+                        [latest_ts, predicted_ts],
+                        [latest_download, prediction],
+                        color="#ff7f11",
+                        linewidth=2.0,
+                        marker="o",
+                        label="latest prediction",
+                    )
+
+            self.predict_combined_axis.set_title(
+                "Combined chart: download + prediction history (last 1 hour)",
+            )
+            self.predict_combined_axis.set_ylabel("Mbps")
+            self.predict_combined_axis.set_xlabel("Timestamp (UTC)")
+            self.predict_combined_axis.grid(alpha=0.25)
+            self.predict_combined_axis.tick_params(axis="x", labelrotation=20, labelsize=8)
+            self.predict_combined_axis.legend(loc="upper left")
+            self.predict_combined_figure.tight_layout()
+            self.predict_combined_canvas.draw_idle()
+            if prediction_history_loaded:
+                self.predict_combined_chart_status_var.set(
+                    "Combined chart refreshed with CSV download + PostgreSQL prediction history.",
+                )
+            else:
+                self.predict_combined_chart_status_var.set(
+                    "Combined chart refreshed with CSV download history (no prediction history).",
+                )
+        except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Combined prediction chart refresh failed")
+            self.predict_combined_chart_status_var.set(f"Combined chart error: {exc}")
 
     def report_callback_exception(
         self,
