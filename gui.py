@@ -184,6 +184,9 @@ class MedidorApp(ctk.CTk):
         self.predict_history_chart_status_var = ctk.StringVar(
             value="Prediction history chart: waiting for data.",
         )
+        self.regression_chart_status_var = ctk.StringVar(
+            value="Regression chart: waiting for data.",
+        )
         self.predict_figure: Figure | None = None
         self.predict_axis = None
         self.predict_canvas = None
@@ -193,6 +196,9 @@ class MedidorApp(ctk.CTk):
         self.predict_combined_figure: Figure | None = None
         self.predict_combined_axis = None
         self.predict_combined_canvas = None
+        self.regression_figure: Figure | None = None
+        self.regression_axis = None
+        self.regression_canvas = None
         self.model_registry_status_var = ctk.StringVar(value="Model registry: waiting for data.")
         self.model_registry_tree: ttk.Treeview | None = None
 
@@ -219,7 +225,15 @@ class MedidorApp(ctk.CTk):
         pages_host.grid_columnconfigure(0, weight=1)
         pages_host.grid_rowconfigure(0, weight=1)
 
-        view_names = ["Settings", "Monitor", "Resultados", "Entrenar", "Predicciones", "Modelos"]
+        view_names = [
+            "Settings",
+            "Monitor",
+            "Resultados",
+            "Entrenar",
+            "Predicciones",
+            "Regresion",
+            "Modelos",
+        ]
         self.view_frames: dict[str, ctk.CTkFrame] = {}
         self.view_buttons: dict[str, ctk.CTkButton] = {}
         for index, view_name in enumerate(view_names):
@@ -647,7 +661,7 @@ class MedidorApp(ctk.CTk):
                 anchor="w",
             ).grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
         else:
-            self.predict_combined_figure = Figure(figsize=(6.8, 2.6), dpi=100)
+            self.predict_combined_figure = Figure(figsize=(6.8, 2.6), dpi=100, constrained_layout=True)
             self.predict_combined_axis = self.predict_combined_figure.add_subplot(111)
             self.predict_combined_axis.set_title("Combined download + prediction history")
             self.predict_combined_axis.set_ylabel("Mbps")
@@ -668,6 +682,47 @@ class MedidorApp(ctk.CTk):
         self.predict_box = ctk.CTkTextbox(predict_tab)
         self.predict_box.grid(row=5, column=0, padx=10, pady=(0, 10), sticky="nsew")
         self.predict_box.configure(state="disabled")
+
+        regression_tab = self.view_frames["Regresion"]
+        regression_tab.grid_columnconfigure(0, weight=1)
+        regression_tab.grid_rowconfigure(0, weight=1)
+
+        regression_panel = ctk.CTkFrame(regression_tab, corner_radius=10)
+        regression_panel.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        regression_panel.grid_columnconfigure(0, weight=1)
+        regression_panel.grid_rowconfigure(1, weight=1)
+
+        ctk.CTkLabel(
+            regression_panel,
+            textvariable=self.regression_chart_status_var,
+            anchor="w",
+        ).grid(row=0, column=0, padx=10, pady=(8, 4), sticky="ew")
+
+        if Figure is None or FigureCanvasTkAgg is None:
+            ctk.CTkLabel(
+                regression_panel,
+                text="Install matplotlib to display regression scatter chart.",
+                anchor="w",
+            ).grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
+        else:
+            self.regression_figure = Figure(figsize=(7.2, 4.2), dpi=100, constrained_layout=True)
+            self.regression_axis = self.regression_figure.add_subplot(111)
+            self.regression_axis.set_title("Linear regression scatter (all-time download history)")
+            self.regression_axis.set_ylabel("Download (Mbps)")
+            self.regression_axis.set_xlabel("Timestamp (UTC)")
+            self.regression_axis.grid(alpha=0.25)
+
+            self.regression_canvas = FigureCanvasTkAgg(
+                self.regression_figure,
+                master=regression_panel,
+            )
+            self.regression_canvas.get_tk_widget().grid(
+                row=1,
+                column=0,
+                padx=10,
+                pady=(0, 10),
+                sticky="nsew",
+            )
 
         models_tab = self.view_frames["Modelos"]
         models_tab.grid_columnconfigure(0, weight=1)
@@ -754,6 +809,7 @@ class MedidorApp(ctk.CTk):
         self._refresh_prediction_chart(pathlib.Path(self.predict_input_var.get()))
         self._refresh_prediction_history_chart()
         self._refresh_prediction_combined_chart(pathlib.Path(self.predict_input_var.get()))
+        self._refresh_regression_scatter_chart()
         self._refresh_model_health()
         self._refresh_last_predicted_download()
         self._refresh_model_registry_table()
@@ -920,6 +976,9 @@ class MedidorApp(ctk.CTk):
         for name, button in self.view_buttons.items():
             button.configure(state="disabled" if name == view_name else "normal")
 
+        if view_name == "Regresion":
+            self._refresh_regression_scatter_chart()
+
     def _metric_card(
         self,
         parent: ctk.CTkFrame,
@@ -948,6 +1007,7 @@ class MedidorApp(ctk.CTk):
         if selected:
             self.output_var.set(selected)
             self._refresh_analysis_report()
+            self._refresh_regression_scatter_chart()
 
     def _default_clean_output(self) -> pathlib.Path:
         output_path = pathlib.Path(self.output_var.get())
@@ -1559,6 +1619,7 @@ class MedidorApp(ctk.CTk):
                             pathlib.Path(payload["input_path"]),
                             prediction_payload=payload,
                         )
+                        self._refresh_regression_scatter_chart()
                         self._refresh_model_health()
                         self._append_log(
                             (
@@ -1599,6 +1660,7 @@ class MedidorApp(ctk.CTk):
             f"ping={row['ping_ms']} ms",
         )
         self._refresh_analysis_report()
+        self._refresh_regression_scatter_chart()
         self._refresh_model_health()
 
     def _build_predicted_sample(
@@ -2175,7 +2237,6 @@ class MedidorApp(ctk.CTk):
             self.predict_combined_axis.grid(alpha=0.25)
             self.predict_combined_axis.tick_params(axis="x", labelrotation=20, labelsize=8)
             self.predict_combined_axis.legend(loc="upper left")
-            self.predict_combined_figure.tight_layout()
             self.predict_combined_canvas.draw_idle()
             if prediction_history_loaded:
                 self.predict_combined_chart_status_var.set(
@@ -2188,6 +2249,80 @@ class MedidorApp(ctk.CTk):
         except Exception as exc:  # noqa: BLE001
             LOGGER.exception("Combined prediction chart refresh failed")
             self.predict_combined_chart_status_var.set(f"Combined chart error: {exc}")
+
+    def _refresh_regression_scatter_chart(self) -> None:
+        if (
+            self.regression_figure is None
+            or self.regression_axis is None
+            or self.regression_canvas is None
+        ):
+            self.regression_chart_status_var.set(
+                "Regression chart unavailable (matplotlib not installed).",
+            )
+            return
+        try:
+            input_path = pathlib.Path(self.output_var.get())
+            frame = predict_load_data(input_path)
+            if frame.empty:
+                raise ValueError("CSV has no rows.")
+
+            history = frame[["timestamp_utc", "download_mbps"]].dropna().copy()
+            if history.empty or len(history) < 2:
+                raise ValueError("Need at least 2 rows for linear regression.")
+            history = history.sort_values("timestamp_utc")
+
+            base_ts = history.iloc[0]["timestamp_utc"]
+            x_minutes = [
+                (ts - base_ts).total_seconds() / 60.0
+                for ts in history["timestamp_utc"]
+            ]
+            y_values = [float(value) for value in history["download_mbps"]]
+            n_points = len(x_minutes)
+            sum_x = sum(x_minutes)
+            sum_y = sum(y_values)
+            sum_xy = sum(x * y for x, y in zip(x_minutes, y_values))
+            sum_xx = sum(x * x for x in x_minutes)
+
+            denominator = (n_points * sum_xx) - (sum_x * sum_x)
+            if abs(denominator) < 1e-12:
+                slope = 0.0
+                intercept = sum_y / n_points
+            else:
+                slope = ((n_points * sum_xy) - (sum_x * sum_y)) / denominator
+                intercept = (sum_y - (slope * sum_x)) / n_points
+            fitted = [(slope * x) + intercept for x in x_minutes]
+
+            self.regression_axis.clear()
+            self.regression_axis.scatter(
+                history["timestamp_utc"],
+                y_values,
+                color="#0a84ff",
+                s=14,
+                alpha=0.65,
+                label="samples",
+            )
+            self.regression_axis.plot(
+                history["timestamp_utc"],
+                fitted,
+                color="#ff7f11",
+                linewidth=2.0,
+                label="linear fit",
+            )
+            self.regression_axis.set_title("Linear regression scatter (all-time download history)")
+            self.regression_axis.set_ylabel("Download (Mbps)")
+            self.regression_axis.set_xlabel("Timestamp (UTC)")
+            self.regression_axis.grid(alpha=0.25)
+            self.regression_axis.tick_params(axis="x", labelrotation=20, labelsize=8)
+            self.regression_axis.legend(loc="upper left")
+            self.regression_canvas.draw_idle()
+
+            slope_per_hour = slope * 60.0
+            self.regression_chart_status_var.set(
+                f"Regression chart refreshed ({n_points} samples, trend={slope_per_hour:+.3f} Mbps/hour).",
+            )
+        except Exception as exc:  # noqa: BLE001
+            LOGGER.exception("Regression scatter chart refresh failed")
+            self.regression_chart_status_var.set(f"Regression chart error: {exc}")
 
     def report_callback_exception(
         self,

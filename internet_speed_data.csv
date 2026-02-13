@@ -717,3 +717,196 @@ timestamp_utc,download_mbps,upload_mbps,ping_ms,server_name,server_country,isp,p
 2026-02-13T00:33:40.350333+00:00,10.71,104.187,5.886,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
 2026-02-13T00:34:23.601903+00:00,37.412,86.946,12.144,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
 2026-02-13T00:35:09.123078+00:00,356.844,1.846,5.939,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T14:52:46.478823+00:00,301.441,160.428,20.894,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T14:54:00.078950+00:00,388.703,328.562,10.988,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T14:55:09.739735+00:00,566.895,410.438,4.47,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T14:56:19.431271+00:00,573.796,397.799,3.855,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T14:57:29.036375+00:00,580.33,390.427,3.733,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T14:58:46.494704+00:00,448.822,137.905,7.816,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T14:59:56.384626+00:00,534.579,437.599,6.478,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:01:47.229968+00:00,560.506,393.188,6.002,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:02:02.364494+00:00,536.71,382.198,7.383,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:02:16.939488+00:00,564.307,433.07,3.796,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:02:32.479024+00:00,515.012,377.62,3.539,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:02:47.804577+00:00,498.553,419.54,6.755,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:03:04.481369+00:00,419.531,425.913,8.427,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:03:19.268907+00:00,538.765,419.911,3.902,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:03:33.785263+00:00,558.629,428.542,3.074,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:03:48.242724+00:00,569.133,423.877,3.343,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:04:02.899587+00:00,561.664,410.872,6.29,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:04:17.330469+00:00,573.255,441.529,7.198,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:04:32.237936+00:00,552.468,390.558,6.297,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:04:47.007737+00:00,531.747,437.197,3.769,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:05:01.618147+00:00,569.011,405.767,6.278,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:05:16.164098+00:00,564.518,415.505,3.621,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:05:30.892348+00:00,570.882,387.134,3.638,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:05:46.103166+00:00,525.493,390.19,3.12,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:06:00.991144+00:00,568.817,381.21,6.922,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:06:15.634118+00:00,571.378,393.065,3.436,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:06:56.776373+00:00,0.995,1.652,7.042,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:07:11.310732+00:00,584.04,415.568,6.525,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:07:26.258392+00:00,566.768,370.688,4.119,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:07:41.246040+00:00,562.914,398.241,7.059,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:07:55.759655+00:00,574.808,417.022,5.052,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:08:10.124455+00:00,578.515,433.048,6.499,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:08:24.483371+00:00,572.912,429.194,5.225,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:09:10.904374+00:00,0.996,1.425,4.051,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:09:51.947593+00:00,1.038,1.665,3.108,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:11:07.321217+00:00,572.695,151.984,4.043,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:11:31.987258+00:00,347.431,142.891,4.812,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:11:52.086207+00:00,271.296,355.071,5.051,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:12:08.000697+00:00,502.835,346.903,3.702,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:12:23.365906+00:00,501.73,434.063,4.494,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:12:50.155916+00:00,247.813,52.016,6.306,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:13:09.415771+00:00,421.926,258.675,18.391,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:13:35.736945+00:00,52.418,162.556,8.811,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:14:17.259485+00:00,0.987,1.359,3.174,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:14:37.546720+00:00,498.946,289.455,6.567,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:14:55.821901+00:00,448.567,249.661,5.676,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:15:14.197988+00:00,440.789,246.892,3.29,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:15:30.316634+00:00,519.811,338.334,4.989,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:15:47.061639+00:00,578.72,250.047,5.326,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:16:02.209319+00:00,529.97,411.719,3.779,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:16:17.409731+00:00,578.246,343.623,5.598,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:16:33.743886+00:00,523.529,296.935,7.962,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:16:53.192944+00:00,436.528,220.241,9.979,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:17:09.518927+00:00,524.251,305.743,4.258,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:17:29.486822+00:00,424.342,257.835,10.942,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:17:50.142046+00:00,412.007,194.338,5.176,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:18:08.158835+00:00,413.534,348.03,5.373,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:18:24.072640+00:00,539.3,329.95,8.462,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:19:05.708791+00:00,0.991,1.663,3.667,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:19:20.911180+00:00,569.905,337.626,3.641,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:19:35.315772+00:00,563.3,447.383,4.051,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:19:49.677211+00:00,586.819,409.463,3.14,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:20:03.964394+00:00,573.633,444.045,3.441,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:20:18.165755+00:00,582.317,437.106,3.325,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:20:32.290454+00:00,558.873,469.811,3.459,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:20:46.701776+00:00,581.134,432.733,3.304,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:21:01.187723+00:00,558.244,428.617,3.271,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:21:15.631768+00:00,568.154,434.711,3.87,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:21:30.149598+00:00,566.317,415.99,3.653,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:21:44.666535+00:00,575.817,403.462,6.681,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:21:58.847603+00:00,577.187,453.27,4.419,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:22:13.430876+00:00,581.012,395.002,6.312,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:22:27.691050+00:00,564.68,459.46,4.292,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:22:42.231118+00:00,573.0,410.434,4.907,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:22:57.670749+00:00,486.323,424.788,4.827,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:23:12.149749+00:00,551.368,439.49,4.216,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:23:26.702941+00:00,552.522,439.663,2.905,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:23:41.341155+00:00,563.387,408.969,3.967,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:23:55.967670+00:00,545.811,437.566,3.504,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:24:10.469241+00:00,566.145,437.582,3.229,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:24:24.946366+00:00,561.119,433.831,3.518,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:24:39.300659+00:00,575.303,425.17,3.334,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:24:53.502664+00:00,579.196,446.067,3.32,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:25:07.899409+00:00,581.208,425.397,3.165,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:25:22.538319+00:00,544.31,459.417,4.456,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:25:36.913299+00:00,567.967,441.56,3.934,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:25:51.196665+00:00,576.072,443.839,3.453,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:26:32.174864+00:00,0.795,1.942,3.163,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:26:46.956335+00:00,573.564,405.456,6.618,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:27:01.742593+00:00,562.475,403.204,3.954,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:27:16.345468+00:00,563.576,418.283,5.731,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:27:31.213518+00:00,566.854,398.28,4.284,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:27:46.099928+00:00,538.402,426.104,5.851,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:28:00.858455+00:00,569.284,393.795,5.112,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:28:15.883136+00:00,558.294,404.321,8.37,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:28:30.368248+00:00,571.702,428.137,3.81,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:28:45.304804+00:00,554.286,402.698,6.353,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:29:00.727922+00:00,518.57,375.725,4.513,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:29:15.370136+00:00,579.447,390.605,4.301,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:29:29.881976+00:00,570.497,417.344,3.767,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:29:44.600696+00:00,564.936,405.205,3.806,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:29:59.113618+00:00,579.789,412.738,4.679,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:30:26.868216+00:00,554.724,391.064,7.482,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:30:42.289165+00:00,564.731,328.315,3.551,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:30:57.171778+00:00,551.35,412.931,4.364,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:31:12.483220+00:00,563.945,343.86,3.8,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:31:27.789898+00:00,540.725,365.488,6.544,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:31:43.504069+00:00,534.75,331.86,4.677,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:31:59.339780+00:00,549.563,413.696,7.894,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:32:14.186781+00:00,568.809,392.024,5.636,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:32:28.930780+00:00,565.24,407.17,7.035,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:32:44.181995+00:00,514.509,416.774,6.669,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:32:58.878150+00:00,576.642,403.912,3.69,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:33:13.418375+00:00,570.45,417.956,4.325,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:33:29.221029+00:00,559.016,413.709,4.114,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:33:44.239769+00:00,545.743,394.887,3.686,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:33:58.897124+00:00,570.28,416.33,4.377,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:34:13.396119+00:00,577.095,415.78,4.08,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:34:28.496025+00:00,554.654,386.117,4.2,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:34:43.437149+00:00,548.583,391.88,3.939,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:34:59.132192+00:00,581.009,392.754,5.037,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:35:13.871053+00:00,564.177,398.298,3.678,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:36:00.073232+00:00,0.996,1.654,5.602,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:36:15.075912+00:00,561.547,382.222,5.036,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:36:29.727074+00:00,577.814,393.608,6.048,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:36:44.241964+00:00,562.713,438.366,3.53,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:37:26.450012+00:00,0.995,2.071,6.762,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:37:41.835789+00:00,575.643,366.992,6.707,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:37:56.555991+00:00,558.71,413.379,3.346,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:38:11.849769+00:00,555.482,378.007,3.991,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:38:26.629737+00:00,563.317,408.21,4.317,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:38:41.555965+00:00,571.804,378.717,4.43,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:38:56.539306+00:00,536.581,414.448,7.171,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:39:11.379029+00:00,582.985,379.113,5.927,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:39:26.378544+00:00,556.801,391.683,3.962,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:39:41.739355+00:00,563.75,343.698,7.518,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:39:57.115543+00:00,546.833,364.479,4.419,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:40:12.622768+00:00,555.931,360.465,8.572,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:40:28.043829+00:00,568.744,350.777,7.702,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:40:44.141504+00:00,538.178,304.412,6.737,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:41:30.793979+00:00,0.788,1.445,6.738,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:42:07.140168+00:00,1.697,1.107,6.484,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:42:24.147754+00:00,495.348,285.57,8.427,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:42:40.837769+00:00,490.889,396.371,6.575,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:42:56.504799+00:00,519.935,346.793,4.061,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:43:11.989383+00:00,581.291,325.505,8.847,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:43:27.653002+00:00,504.945,371.256,2.878,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:44:12.694642+00:00,0.992,1.618,8.151,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:44:31.771944+00:00,482.566,191.697,4.431,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:44:46.516015+00:00,552.005,421.512,4.591,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:45:27.844981+00:00,0.993,1.911,4.042,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:45:46.453380+00:00,460.229,240.542,5.034,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:46:01.088461+00:00,569.95,425.074,4.397,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:46:15.608239+00:00,538.177,456.39,4.085,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:46:40.446342+00:00,574.537,396.589,4.553,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:46:57.006293+00:00,576.278,406.146,7.505,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:47:00.177142+00:00,0.995,1.042,3.206,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:47:24.889954+00:00,478.145,15.345,4.65,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:47:31.923833+00:00,292.899,133.104,54.561,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:47:56.963703+00:00,1.993,238.46,5.66,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:47:59.421294+00:00,460.978,177.092,11.974,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:48:21.560997+00:00,209.576,158.834,6.061,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:48:22.607115+00:00,143.443,192.074,10.554,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:48:44.112643+00:00,355.003,167.743,6.492,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:48:45.561082+00:00,331.629,196.26,26.302,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:49:06.011570+00:00,212.418,211.52,3.522,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:49:07.009193+00:00,350.54,244.523,7.637,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:49:27.975313+00:00,316.224,205.618,4.097,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:49:28.824616+00:00,294.519,262.119,5.174,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:49:44.937202+00:00,519.861,276.9,6.772,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:50:07.786673+00:00,521.31,380.175,8.292,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:50:15.270366+00:00,0.389,0.209,10.182,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:50:37.239253+00:00,323.809,230.252,6.605,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:50:38.289870+00:00,374.904,305.653,23.858,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:50:56.246390+00:00,405.051,416.635,4.711,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:51:13.271426+00:00,500.362,276.781,4.472,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:51:29.261788+00:00,0.382,0.92,7.179,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:51:30.867468+00:00,520.331,281.189,2.837,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:51:50.935863+00:00,286.045,208.919,5.819,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:51:51.361623+00:00,336.298,259.356,5.009,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:52:05.539912+00:00,562.993,438.012,3.469,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:52:37.500330+00:00,0.738,1.248,5.288,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:52:56.849472+00:00,0.515,1.126,3.478,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:52:58.059807+00:00,446.019,265.003,18.555,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:53:20.284654+00:00,319.606,217.467,6.317,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:53:20.965941+00:00,239.272,172.114,19.593,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:53:45.602613+00:00,254.888,151.341,6.949,Zarcero,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:53:45.878224+00:00,181.123,155.924,11.24,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:54:09.428353+00:00,238.869,163.024,4.303,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:54:09.661661+00:00,220.085,179.227,10.722,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:54:24.290648+00:00,568.008,383.384,5.64,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:54:38.865745+00:00,554.427,453.468,4.238,San Jose,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
+2026-02-13T15:54:51.518442+00:00,0.389,0.539,7.281,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0
