@@ -1,3 +1,8 @@
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lkccomander/bjjvienna.git,lkccomander/medidor&type=date&legend=top-left)](https://www.star-history.com/#lkccomander/bjjvienna.git&lkccomander/medidor&type=date&legend=top-left)
+
+
 # MEDIDOR
 
 Desktop + CLI toolkit to collect internet speed measurements, store them in CSV/PostgreSQL, and run a basic forecasting pipeline.
