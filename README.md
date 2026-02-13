@@ -45,6 +45,20 @@ You can also run directly:
 .\.venv\Scripts\python.exe gui.py
 ```
 
+## Quick Start (Web UI)
+
+Use the web launcher:
+
+```bat
+start_web.bat
+```
+
+Or run directly:
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run web_ui.py
+```
+
 ## CLI Usage
 
 ### 1. Collect samples
@@ -117,6 +131,8 @@ predict_next.py         # Inference on latest data
 postgres/import_csv.py  # CSV -> PostgreSQL
 postgres/export_to_csv.py # PostgreSQL -> CSV
 start_gui.bat           # Windows launcher (activate venv + run GUI)
+start_web.bat           # Windows launcher (activate venv + run Streamlit UI)
+web_ui.py               # Web UI (Streamlit)
 requirements.txt
 ```
 
