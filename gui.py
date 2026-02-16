@@ -201,6 +201,7 @@ class MedidorApp(ctk.CTk):
         self.regression_canvas = None
         self.model_registry_status_var = ctk.StringVar(value="Model registry: waiting for data.")
         self.model_registry_tree: ttk.Treeview | None = None
+        self.event_log_font = ctk.CTkFont(family="Consolas", size=12)
 
         self._build_layout()
         self._poll_ui_queue()
@@ -300,7 +301,7 @@ class MedidorApp(ctk.CTk):
             pady=(10, 4),
             sticky="w",
         )
-        self.log_box = ctk.CTkTextbox(log_panel, height=130)
+        self.log_box = ctk.CTkTextbox(log_panel, height=130, font=self.event_log_font)
         self.log_box.grid(row=1, column=0, padx=12, pady=(0, 12), sticky="nsew")
         self.log_box.configure(state="disabled")
 
@@ -328,7 +329,7 @@ class MedidorApp(ctk.CTk):
             width=170,
         ).grid(row=0, column=1, rowspan=2, padx=12, pady=8, sticky="e")
 
-        self.report_box = ctk.CTkTextbox(results_tab)
+        self.report_box = ctk.CTkTextbox(results_tab, font=self.event_log_font)
         self.report_box.grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
         self.report_box.configure(state="disabled")
 
@@ -458,7 +459,7 @@ class MedidorApp(ctk.CTk):
         )
         self.btn_train.grid(row=5, column=0, columnspan=4, padx=10, pady=(0, 10), sticky="ew")
 
-        self.train_box = ctk.CTkTextbox(train_tab)
+        self.train_box = ctk.CTkTextbox(train_tab, font=self.event_log_font)
         self.train_box.grid(row=1, column=0, padx=10, pady=(0, 10), sticky="nsew")
         self.train_box.configure(state="disabled")
 
