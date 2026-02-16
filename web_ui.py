@@ -354,10 +354,41 @@ def render_settings() -> None:
 
 def monitor_tab() -> None:
     st.subheader("Monitor")
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        if st.button("Measure Once", key="monitor_measure_once", width="stretch"):
-            try:
+    if st.button("Measure Once", key="monitor_measure_once", width="stretch"):
+        try:
+            sample = collect_sample(timeout=int(st.session_state.timeout_seconds))
+            storage = str(st.session_state.storage_mode)
+            path = output_path()
+            if storage in {"csv", "both"}:
+                append_sample_csv(sample=sample, output_path=path)
+            if storage in {"postgres", "both"}:
+                append_sample_postgres(
+                    sample=sample,
+                    host=str(st.session_state.db_host),
+                    port=int(st.session_state.db_port),
+                    database=str(st.session_state.db_name),
+                    user=str(st.session_state.db_user),
+                    password=str(st.session_state.db_password),
+                )
+            st.session_state.last_sample = asdict(sample)
+            add_event(f"Sample saved ({storage}) down={sample.download_mbps} Mbps")
+            st.success("Sample collected successfully.")
+        except Exception as exc:  # noqa: BLE001
+            add_event(f"Sample error: {exc}")
+            st.error(str(exc))
+
+    st.markdown("### Batch Samples")
+    batch_samples = st.number_input(
+        "Batch samples",
+        min_value=1,
+        max_value=30,
+        value=3,
+        key="monitor_batch_samples",
+    )
+    if st.button("Run Batch", key="monitor_run_batch", width="stretch"):
+        try:
+            interval = int(st.session_state.interval_seconds)
+            for index in range(int(batch_samples)):
                 sample = collect_sample(timeout=int(st.session_state.timeout_seconds))
                 storage = str(st.session_state.storage_mode)
                 path = output_path()
@@ -373,46 +404,13 @@ def monitor_tab() -> None:
                         password=str(st.session_state.db_password),
                     )
                 st.session_state.last_sample = asdict(sample)
-                add_event(f"Sample saved ({storage}) down={sample.download_mbps} Mbps")
-                st.success("Sample collected successfully.")
-            except Exception as exc:  # noqa: BLE001
-                add_event(f"Sample error: {exc}")
-                st.error(str(exc))
-
-    with col2:
-        batch_samples = st.number_input(
-            "Batch samples",
-            min_value=1,
-            max_value=30,
-            value=3,
-            key="monitor_batch_samples",
-        )
-        if st.button("Run Batch", key="monitor_run_batch", width="stretch"):
-            try:
-                interval = int(st.session_state.interval_seconds)
-                for index in range(int(batch_samples)):
-                    sample = collect_sample(timeout=int(st.session_state.timeout_seconds))
-                    storage = str(st.session_state.storage_mode)
-                    path = output_path()
-                    if storage in {"csv", "both"}:
-                        append_sample_csv(sample=sample, output_path=path)
-                    if storage in {"postgres", "both"}:
-                        append_sample_postgres(
-                            sample=sample,
-                            host=str(st.session_state.db_host),
-                            port=int(st.session_state.db_port),
-                            database=str(st.session_state.db_name),
-                            user=str(st.session_state.db_user),
-                            password=str(st.session_state.db_password),
-                        )
-                    st.session_state.last_sample = asdict(sample)
-                    add_event(f"[{index + 1}/{batch_samples}] Saved sample ({storage}).")
-                    if index < int(batch_samples) - 1:
-                        time.sleep(interval)
-                st.success("Batch completed.")
-            except Exception as exc:  # noqa: BLE001
-                add_event(f"Batch error: {exc}")
-                st.error(str(exc))
+                add_event(f"[{index + 1}/{batch_samples}] Saved sample ({storage}).")
+                if index < int(batch_samples) - 1:
+                    time.sleep(interval)
+            st.success("Batch completed.")
+        except Exception as exc:  # noqa: BLE001
+            add_event(f"Batch error: {exc}")
+            st.error(str(exc))
 
     sample = st.session_state.last_sample
     if isinstance(sample, dict):
