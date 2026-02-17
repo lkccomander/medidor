@@ -56,6 +56,183 @@ from train_forecast import (
 MODEL_REGISTRY_PATH = TRAIN_DEFAULT_MODEL_DIR / "model_registry.csv"
 
 
+def apply_frontend_design() -> None:
+    st.markdown(
+        """
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
+
+        :root {
+            --bg-main: #0c2f62;
+            --bg-panel: #123a75;
+            --ink: #eaf2ff;
+            --ink-soft: #c7dbf6;
+            --accent: #65b0ff;
+            --accent-2: #2b79d0;
+            --line: #3e6ba3;
+            --card-shadow: 0 12px 24px rgba(4, 17, 36, 0.35);
+        }
+
+        .stApp {
+            background:
+                radial-gradient(circle at 12% 18%, rgba(101, 176, 255, 0.16), transparent 38%),
+                radial-gradient(circle at 90% 8%, rgba(43, 121, 208, 0.18), transparent 34%),
+                linear-gradient(140deg, var(--bg-main), #0f376f 44%, #184889 100%);
+            color: var(--ink);
+            font-family: "Source Serif 4", "Times New Roman", serif;
+        }
+
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #0f3b78 0%, #0a2f62 100%);
+            border-right: 1px solid var(--line);
+        }
+
+        [data-testid="stSidebar"] * {
+            color: #eaf2ff;
+        }
+
+        [data-testid="stSidebar"] input,
+        [data-testid="stSidebar"] textarea,
+        [data-testid="stSidebar"] [data-baseweb="select"] > div {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.28) !important;
+        }
+
+        h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+            font-family: "Bebas Neue", "Impact", sans-serif;
+            letter-spacing: 0.04em;
+            color: var(--ink);
+        }
+
+        .medidor-hero {
+            border: 1px solid var(--line);
+            background: linear-gradient(120deg, rgba(101, 176, 255, 0.18), rgba(43, 121, 208, 0.16) 55%, rgba(18, 58, 117, 0.92));
+            box-shadow: var(--card-shadow);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            margin: 0.35rem 0 1rem;
+        }
+
+        .medidor-hero-title {
+            font-family: "Bebas Neue", "Impact", sans-serif;
+            font-size: 2.1rem;
+            line-height: 1;
+            margin: 0;
+            letter-spacing: 0.05em;
+        }
+
+        .medidor-hero-sub {
+            color: var(--ink-soft);
+            margin: 0.15rem 0 0;
+            font-size: 0.98rem;
+        }
+
+        .medidor-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .medidor-pill {
+            border: 1px solid var(--line);
+            background: rgba(9, 32, 66, 0.6);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 0.35rem 0.72rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .medidor-pill strong {
+            color: var(--accent);
+        }
+
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 0.25rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .stTabs [data-baseweb="tab"] {
+            background: rgba(14, 48, 95, 0.88);
+            border: 1px solid var(--line);
+            border-bottom: 0;
+            border-radius: 10px 10px 0 0;
+            padding: 0.55rem 0.85rem 0.45rem;
+            color: var(--ink-soft);
+            font-weight: 700;
+        }
+
+        .stTabs [aria-selected="true"] {
+            background: #184889;
+            color: var(--accent);
+        }
+
+        .stButton > button {
+            border-radius: 9px;
+            border: 1px solid #4d82c3;
+            background: linear-gradient(180deg, #1b4f94, #153f79);
+            color: #eaf2ff;
+            font-weight: 700;
+            transition: all 160ms ease;
+            box-shadow: 0 4px 12px rgba(4, 17, 36, 0.35);
+        }
+
+        .stButton > button:hover {
+            border-color: var(--accent);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        [data-testid="stMetric"] {
+            background: var(--bg-panel);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 0.35rem 0.45rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .stCodeBlock, [data-testid="stDataFrame"], [data-testid="stTextArea"] {
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: rgba(12, 47, 98, 0.62);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_hero() -> None:
+    sample = st.session_state.last_sample
+    if isinstance(sample, dict):
+        pill_html = (
+            f"<span class='medidor-pill'><strong>DOWN</strong> {sample['download_mbps']} Mbps</span>"
+            f"<span class='medidor-pill'><strong>UP</strong> {sample['upload_mbps']} Mbps</span>"
+            f"<span class='medidor-pill'><strong>PING</strong> {sample['ping_ms']} ms</span>"
+            f"<span class='medidor-pill'><strong>UTC</strong> {sample['timestamp_utc']}</span>"
+        )
+    else:
+        pill_html = (
+            "<span class='medidor-pill'><strong>STATUS</strong> Waiting for first measurement</span>"
+            "<span class='medidor-pill'><strong>MODE</strong> Monitor + Forecast</span>"
+        )
+
+    st.markdown(
+        (
+            "<section class='medidor-hero'>"
+            "<p class='medidor-hero-title'>MEDIDOR Control Room</p>"
+            "<p class='medidor-hero-sub'>"
+            "Telemetry capture, forecasting, and model registry in one place."
+            "</p>"
+            f"<div class='medidor-pill-row'>{pill_html}</div>"
+            "</section>"
+        ),
+        unsafe_allow_html=True,
+    )
+
+
 def init_state() -> None:
     defaults: dict[str, object] = {
         "output_path": str(DEFAULT_OUTPUT),
@@ -733,9 +910,10 @@ def models_tab() -> None:
 def main() -> None:
     st.set_page_config(page_title="MEDIDOR Web UI", layout="wide")
     init_state()
+    apply_frontend_design()
     render_settings()
 
-    st.title("MEDIDOR - Web UI")
+    render_hero()
     tab_monitor, tab_results, tab_train, tab_predict, tab_models = st.tabs(
         ["Monitor", "Resultados", "Entrenar", "Predicciones", "Modelos"],
     )

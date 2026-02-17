@@ -272,7 +272,7 @@ timestamp_utc,download_mbps,upload_mbps,ping_ms,server_name,server_country,isp,p
 2026-02-12T20:29:05.736662+00:00,292.536,192.618,16.369,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
 2026-02-12T20:29:29.401333+00:00,352.512,145.251,5.853,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
 2026-02-12T20:29:59.628347+00:00,429.585,144.709,11.609,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
-2026-02-12T20:30:34.537673+00:00,371.964,267.989,19.857,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-12T20:30:34.537673+00:00,371.964,267.989,19.857,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,1,1
 2026-02-12T20:30:57.013477+00:00,374.673,165.306,8.485,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
 2026-02-12T21:23:34.404107+00:00,325.383,107.181,17.293,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,21,0,0,0,0
 2026-02-12T21:25:07.753198+00:00,296.864,120.876,11.042,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,21,0,0,0,0
@@ -523,3 +523,13 @@ timestamp_utc,download_mbps,upload_mbps,ping_ms,server_name,server_country,isp,p
 2026-02-17T19:16:48.897181+00:00,306.557,206.425,27.162,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,19,0,0,1,1
 2026-02-17T19:17:15.200369+00:00,286.940,127.524,7.570,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,19,0,0,0,0
 2026-02-17T19:17:42.853498+00:00,225.364,51.683,8.921,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,19,0,0,0,0
+2026-02-17T20:05:21.052283+00:00,12.397,262.713,8.151,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:05:41.751142+00:00,56.526,6.402,6.055,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:06:59.844263+00:00,183.053,8.042,6.339,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:07:27.981283+00:00,78.549,79.316,7.966,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:08:18.960770+00:00,32.150,6.612,6.739,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:08:53.973902+00:00,129.693,235.654,7.440,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:09:14.953892+00:00,337.201,236.707,10.462,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:09:59.466963+00:00,317.969,149.322,6.346,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:22:35.992333+00:00,214.489,150.331,9.693,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0
+2026-02-17T20:26:48.530502+00:00,474.513,97.337,8.625,San José,Costa Rica,"Comunicaciones Metropolitanas METROCOM, S.A.",45.65.190.214,lenovo1,Windows-11-10.0.26200-SP0,20,0,0,0,0

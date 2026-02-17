@@ -119,11 +119,23 @@ class MedidorApp(ctk.CTk):
     def __init__(self) -> None:
         super().__init__()
         self.title("MEDIDOR | Internet Speed")
-        self.geometry("820x560")
-        self.minsize(780, 520)
+        self.geometry("980x650")
+        self.minsize(860, 560)
 
         ctk.set_appearance_mode("System")
         ctk.set_default_color_theme("blue")
+        self.palette: dict[str, str] = {
+            "app_bg": "#eaf2ff",
+            "panel_bg": "#f4f8ff",
+            "nav_bg": "#dce9ff",
+            "card_bg": "#ffffff",
+            "line": "#b9cef0",
+            "ink": "#102a43",
+            "ink_muted": "#486581",
+            "accent": "#0a84ff",
+            "accent_hover": "#0066cc",
+            "accent_soft": "#d3e4ff",
+        }
 
         self.ui_queue: queue.Queue[tuple[str, object]] = queue.Queue()
         self.worker_thread: threading.Thread | None = None
@@ -202,21 +214,112 @@ class MedidorApp(ctk.CTk):
         self.model_registry_status_var = ctk.StringVar(value="Model registry: waiting for data.")
         self.model_registry_tree: ttk.Treeview | None = None
         self.event_log_font = ctk.CTkFont(family="Consolas", size=12)
+        self.hero_title_font = ctk.CTkFont(family="Georgia", size=30, weight="bold")
+        self.hero_body_font = ctk.CTkFont(family="Georgia", size=13)
+        self.hero_status_var = ctk.StringVar(value="Status: waiting for first measurement.")
 
         self._build_layout()
         self._poll_ui_queue()
         self.protocol("WM_DELETE_WINDOW", self._on_close)
 
+    def _build_hero(self) -> None:
+        hero = ctk.CTkFrame(
+            self,
+            corner_radius=14,
+            fg_color=self.palette["panel_bg"],
+            border_width=1,
+            border_color=self.palette["line"],
+        )
+        hero.grid(row=0, column=0, padx=14, pady=(14, 8), sticky="ew")
+        hero.grid_columnconfigure(0, weight=1)
+        ctk.CTkLabel(
+            hero,
+            text="MEDIDOR CONTROL ROOM",
+            font=self.hero_title_font,
+            text_color=self.palette["ink"],
+        ).grid(row=0, column=0, padx=14, pady=(10, 0), sticky="w")
+        ctk.CTkLabel(
+            hero,
+            text="Desktop telemetry monitor + forecasting workspace.",
+            font=self.hero_body_font,
+            text_color=self.palette["ink_muted"],
+        ).grid(row=1, column=0, padx=14, pady=(0, 4), sticky="w")
+        ctk.CTkLabel(
+            hero,
+            textvariable=self.hero_status_var,
+            font=self.hero_body_font,
+            text_color=self.palette["accent"],
+        ).grid(row=2, column=0, padx=14, pady=(0, 10), sticky="w")
+
+    def _update_hero_status(self) -> None:
+        self.hero_status_var.set(
+            "Status: "
+            f"DOWN {self.last_down_var.get()} Mbps | "
+            f"UP {self.last_up_var.get()} Mbps | "
+            f"PING {self.last_ping_var.get()} ms | "
+            f"UTC {self.last_time_var.get()}"
+        )
+
+    def _apply_visual_theme(self) -> None:
+        self.configure(fg_color=self.palette["app_bg"])
+        style = ttk.Style()
+        style.theme_use("clam")
+        style.configure(
+            "Treeview",
+            background=self.palette["card_bg"],
+            foreground=self.palette["ink"],
+            fieldbackground=self.palette["card_bg"],
+            bordercolor=self.palette["line"],
+        )
+        style.configure(
+            "Treeview.Heading",
+            background=self.palette["nav_bg"],
+            foreground=self.palette["ink"],
+        )
+
+        def _style_widget(widget: object) -> None:
+            if isinstance(widget, ctk.CTkButton):
+                widget.configure(
+                    fg_color=self.palette["accent"],
+                    hover_color=self.palette["accent_hover"],
+                    text_color="#ffffff",
+                    border_width=0,
+                )
+            elif isinstance(widget, ctk.CTkFrame):
+                fg_color = widget.cget("fg_color")
+                if fg_color != "transparent":
+                    widget.configure(
+                        fg_color=self.palette["panel_bg"],
+                        border_width=1,
+                        border_color=self.palette["line"],
+                    )
+            elif isinstance(widget, ctk.CTkTextbox):
+                widget.configure(
+                    fg_color=self.palette["card_bg"],
+                    border_width=1,
+                    border_color=self.palette["line"],
+                    text_color=self.palette["ink"],
+                )
+
+        def _walk(widget: object) -> None:
+            if hasattr(widget, "winfo_children"):
+                for child in widget.winfo_children():
+                    _style_widget(child)
+                    _walk(child)
+
+        _walk(self)
+
     def _build_layout(self) -> None:
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+        self._build_hero()
 
         content_host = ctk.CTkFrame(self, corner_radius=12)
-        content_host.grid(row=0, column=0, padx=14, pady=(14, 8), sticky="nsew")
+        content_host.grid(row=1, column=0, padx=14, pady=(0, 8), sticky="nsew")
         content_host.grid_columnconfigure(1, weight=1)
         content_host.grid_rowconfigure(0, weight=1)
 
-        nav_panel = ctk.CTkFrame(content_host, width=170, corner_radius=10)
+        nav_panel = ctk.CTkFrame(content_host, width=180, corner_radius=10, fg_color=self.palette["nav_bg"])
         nav_panel.grid(row=0, column=0, padx=(10, 8), pady=10, sticky="ns")
         nav_panel.grid_propagate(False)
         nav_panel.grid_columnconfigure(0, weight=1)
@@ -243,6 +346,9 @@ class MedidorApp(ctk.CTk):
                 text=view_name,
                 command=lambda name=view_name: self._show_view(name),
                 anchor="w",
+                fg_color=self.palette["accent_soft"],
+                hover_color=self.palette["accent"],
+                text_color=self.palette["ink"],
             )
             button.grid(row=index, column=0, padx=10, pady=(10 if index == 0 else 6, 0), sticky="ew")
             self.view_buttons[view_name] = button
@@ -774,7 +880,7 @@ class MedidorApp(ctk.CTk):
         self._show_view("Monitor")
 
         actions = ctk.CTkFrame(self, fg_color="transparent")
-        actions.grid(row=1, column=0, padx=14, pady=(4, 14), sticky="ew")
+        actions.grid(row=2, column=0, padx=14, pady=(4, 14), sticky="ew")
         actions.grid_columnconfigure((0, 1, 2, 3), weight=1)
 
         self.btn_one = ctk.CTkButton(
@@ -814,6 +920,8 @@ class MedidorApp(ctk.CTk):
         self._refresh_model_health()
         self._refresh_last_predicted_download()
         self._refresh_model_registry_table()
+        self._update_hero_status()
+        self._apply_visual_theme()
 
     def _build_settings_form(self, parent: ctk.CTkFrame) -> None:
         form = ctk.CTkFrame(parent, corner_radius=12)
@@ -975,7 +1083,15 @@ class MedidorApp(ctk.CTk):
                 frame.grid_remove()
 
         for name, button in self.view_buttons.items():
-            button.configure(state="disabled" if name == view_name else "normal")
+            if name == view_name:
+                button.configure(state="disabled", fg_color=self.palette["accent"], text_color="#ffffff")
+            else:
+                button.configure(
+                    state="normal",
+                    fg_color=self.palette["accent_soft"],
+                    hover_color=self.palette["accent"],
+                    text_color=self.palette["ink"],
+                )
 
         if view_name == "Regresion":
             self._refresh_regression_scatter_chart()
@@ -988,13 +1104,24 @@ class MedidorApp(ctk.CTk):
         row: int,
         column: int,
     ) -> None:
-        card = ctk.CTkFrame(parent, corner_radius=10)
+        card = ctk.CTkFrame(
+            parent,
+            corner_radius=10,
+            fg_color=self.palette["card_bg"],
+            border_width=1,
+            border_color=self.palette["line"],
+        )
         card.grid(row=row, column=column, padx=10, pady=8, sticky="nsew")
-        ctk.CTkLabel(card, text=title).pack(anchor="w", padx=12, pady=(10, 2))
+        ctk.CTkLabel(card, text=title, text_color=self.palette["ink_muted"]).pack(
+            anchor="w",
+            padx=12,
+            pady=(10, 2),
+        )
         ctk.CTkLabel(
             card,
             textvariable=variable,
             font=ctk.CTkFont(size=18, weight="bold"),
+            text_color=self.palette["ink"],
         ).pack(anchor="w", padx=12, pady=(0, 10))
 
     def _pick_output(self) -> None:
@@ -1645,6 +1772,7 @@ class MedidorApp(ctk.CTk):
         except queue.Empty:
             pass
         self._refresh_prediction_validity_display()
+        self._update_hero_status()
         self.after(250, self._poll_ui_queue)
 
     def _apply_sample(self, sample: SpeedSample) -> None:
@@ -1663,6 +1791,7 @@ class MedidorApp(ctk.CTk):
         self._refresh_analysis_report()
         self._refresh_regression_scatter_chart()
         self._refresh_model_health()
+        self._update_hero_status()
 
     def _build_predicted_sample(
         self,

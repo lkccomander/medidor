@@ -1634,3 +1634,118 @@ psycopg.OperationalError: connection failed: connection to server at "127.0.0.1"
 Multiple connection attempts failed. All failures were:
 - host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
 - host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-17 14:03:13,446 | INFO | MainThread | MEDIDOR GUI startup
+2026-02-17 14:03:16,079 | ERROR | MainThread | Prediction history chart refresh failed
+Traceback (most recent call last):
+  File "c:\Projects\medidor\gui.py", line 2239, in _refresh_prediction_history_chart
+    timestamps, values = self._load_prediction_history(limit=1000)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "c:\Projects\medidor\gui.py", line 1981, in _load_prediction_history
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-17 14:03:16,791 | ERROR | MainThread | Model health refresh failed
+Traceback (most recent call last):
+  File "c:\Projects\medidor\gui.py", line 2142, in _refresh_model_health
+    metrics = self._load_model_health(limit=60)
+  File "c:\Projects\medidor\gui.py", line 2088, in _load_model_health
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-17 14:03:16,975 | ERROR | MainThread | Latest prediction refresh failed
+Traceback (most recent call last):
+  File "c:\Projects\medidor\gui.py", line 2179, in _refresh_last_predicted_download
+    value, predicted_ts, model_version = self._load_latest_download_prediction()
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Projects\medidor\gui.py", line 2022, in _load_latest_download_prediction
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-17 14:04:10,315 | ERROR | Thread-1 (_worker_loop) | Sample collection/storage failed
+Traceback (most recent call last):
+  File "c:\Projects\medidor\gui.py", line 1633, in _collect_and_store
+    append_sample_postgres(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        sample=sample,
+        ^^^^^^^^^^^^^^
+    ...<4 lines>...
+        password=self.db_password_var.get(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Projects\medidor\main.py", line 121, in append_sample_postgres
+    _append_speed_sample_postgres(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sample=sample,
+        ^^^^^^^^^^^^^^
+    ...<6 lines>...
+        index_name="ux_internet_speed_samples_natural",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Projects\medidor\main.py", line 314, in _append_speed_sample_postgres
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-17 14:32:35,788 | INFO | MainThread | MEDIDOR GUI startup
+2026-02-17 14:32:37,617 | ERROR | MainThread | Prediction history chart refresh failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 2239, in _refresh_prediction_history_chart
+    timestamps, values = self._load_prediction_history(limit=1000)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Projects\medidor\gui.py", line 1981, in _load_prediction_history
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-17 14:32:38,166 | ERROR | MainThread | Model health refresh failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 2142, in _refresh_model_health
+    metrics = self._load_model_health(limit=60)
+  File "C:\Projects\medidor\gui.py", line 2088, in _load_model_health
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-02-17 14:32:38,345 | ERROR | MainThread | Latest prediction refresh failed
+Traceback (most recent call last):
+  File "C:\Projects\medidor\gui.py", line 2179, in _refresh_last_predicted_download
+    value, predicted_ts, model_version = self._load_latest_download_prediction()
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Projects\medidor\gui.py", line 2022, in _load_latest_download_prediction
+    with psycopg.connect(conninfo=conninfo) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\medidor\.venv\Lib\site-packages\psycopg\connection.py", line 129, in connect
+    raise type(last_ex)("\n".join(lines)).with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: '5432', hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: '5432', hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied

@@ -14,15 +14,20 @@ Detect failures early in data preparation, training, and inference outputs.
 
 1. Verify inputs:
 - Confirm required files exist: `internet_speed_data.csv`, `models/` directory.
-- Confirm Python environment is available and dependencies are installed.
+- Confirm Python environment is available and dependencies are installed (`python -c "import pandas, sklearn, joblib"`).
 
 2. Run data analysis/cleaning:
 - Execute `analyze.py` using a small rolling window and explicit output path.
 - Stop and report if cleaning fails.
 
 3. Run training:
-- Execute `train_forecast.py` with explicit `--target`, `--horizon`, `--lags`, and `--test-size`.
-- Validate that `models/medidor_forecast.joblib` and `models/medidor_forecast_metrics.json` are generated/updated.
+- Execute `train_forecast.py` with explicit `--input`, `--target`, `--horizon`, `--lags`, and `--test-size`.
+- Validate that base artifacts are generated/updated:
+  - `models/medidor_forecast.joblib`
+  - `models/medidor_forecast_metrics.json`
+- Validate that versioned artifacts are generated/updated (timestamped suffix):
+  - `models/medidor_forecast_v*_t-*_h-*_l-*.joblib`
+  - `models/medidor_forecast_metrics_v*_t-*_h-*_l-*.json`
 
 4. Run prediction:
 - Execute `predict_next.py` with explicit model path.
@@ -41,8 +46,9 @@ Use these commands as defaults and adjust only if user requests different parame
 
 ```bash
 python analyze.py --input internet_speed_data.csv --rolling-window 5 --output-clean internet_speed_data_clean.csv
-python train_forecast.py --input internet_speed_data.csv --target download_mbps --horizon 1 --lags 5 --test-size 0.2
-python predict_next.py --input internet_speed_data.csv --model models/medidor_forecast.joblib
+python -c "import pandas, sklearn, joblib"
+python train_forecast.py --input internet_speed_data_clean.csv --target download_mbps --horizon 1 --lags 5 --test-size 0.2
+python predict_next.py --input internet_speed_data_clean.csv --model models/medidor_forecast.joblib
 python -m py_compile main.py gui.py web_ui.py analyze.py train_forecast.py predict_next.py
 ```
 
