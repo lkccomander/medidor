@@ -1,0 +1,4 @@
+interface:
+  display_name: "Model Train Check"
+  short_description: "Train and validate medidor forecasting workflow"
+  default_prompt: "Use this skill to run, validate, and troubleshoot the medidor training and prediction pipeline."

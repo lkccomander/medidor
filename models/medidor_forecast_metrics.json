@@ -1,10 +1,10 @@
 {
-  "samples_total": 682,
-  "samples_train": 545,
-  "samples_test": 137,
-  "mae_baseline": 150.8876788321168,
-  "rmse_baseline": 240.43272762955309,
-  "mae_model": 122.59678496490979,
-  "rmse_model": 166.5734456794828,
-  "model_version": "v20260216T212607Z_t-download_mbps_h-1_l-5"
+  "samples_total": 692,
+  "samples_train": 553,
+  "samples_test": 139,
+  "mae_baseline": 164.62925899280575,
+  "rmse_baseline": 250.10598621860552,
+  "mae_model": 122.42966519078857,
+  "rmse_model": 171.19922719040127,
+  "model_version": "v20260217T191845Z_t-download_mbps_h-1_l-5"
 }
