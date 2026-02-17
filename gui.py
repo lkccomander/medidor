@@ -311,6 +311,12 @@ class MedidorApp(ctk.CTk):
             foreground=self.palette["ink"],
         )
 
+        def _is_semantic_badge_label(widget: object) -> bool:
+            return (
+                widget is getattr(self, "model_health_badge_label", None)
+                or bool(getattr(widget, "is_status_badge", False))
+            )
+
         def _style_widget(widget: object) -> None:
             if isinstance(widget, ctk.CTkButton):
                 widget.configure(
@@ -335,7 +341,8 @@ class MedidorApp(ctk.CTk):
                     text_color=self.palette["ink"],
                 )
             elif isinstance(widget, ctk.CTkLabel):
-                widget.configure(text_color=self.palette["ink"])
+                if not _is_semantic_badge_label(widget):
+                    widget.configure(text_color=self.palette["ink"])
             elif isinstance(widget, ctk.CTkEntry):
                 widget.configure(
                     fg_color=self.palette["card_bg"],
@@ -729,6 +736,7 @@ class MedidorApp(ctk.CTk):
             anchor="w",
             text_color="#8d8d8d",
         )
+        self.model_health_badge_label.is_status_badge = True
         self.model_health_badge_label.grid(row=2, column=2, padx=10, pady=(0, 8), sticky="w")
 
         predict_chart_panel = ctk.CTkFrame(predict_tab, corner_radius=10)
