@@ -75,6 +75,32 @@ APP_LOG_PATH = pathlib.Path(__file__).with_name("app.log")
 MODEL_REGISTRY_PATH = TRAIN_DEFAULT_MODEL_DIR / "model_registry.csv"
 LOGGER = logging.getLogger("medidor.app")
 
+LIGHT_PALETTE: dict[str, str] = {
+    "app_bg": "#eaf2ff",
+    "panel_bg": "#f4f8ff",
+    "nav_bg": "#dce9ff",
+    "card_bg": "#ffffff",
+    "line": "#b9cef0",
+    "ink": "#102a43",
+    "ink_muted": "#486581",
+    "accent": "#0a84ff",
+    "accent_hover": "#0066cc",
+    "accent_soft": "#d3e4ff",
+}
+
+DARK_PALETTE: dict[str, str] = {
+    "app_bg": "#0b1f3f",
+    "panel_bg": "#132f59",
+    "nav_bg": "#0f274b",
+    "card_bg": "#183965",
+    "line": "#2f5589",
+    "ink": "#e9f2ff",
+    "ink_muted": "#b8cdee",
+    "accent": "#65b0ff",
+    "accent_hover": "#3a8fe8",
+    "accent_soft": "#244a7d",
+}
+
 
 def _configure_error_logging() -> None:
     if LOGGER.handlers:
@@ -122,20 +148,10 @@ class MedidorApp(ctk.CTk):
         self.geometry("980x650")
         self.minsize(860, 560)
 
-        ctk.set_appearance_mode("System")
+        ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
-        self.palette: dict[str, str] = {
-            "app_bg": "#eaf2ff",
-            "panel_bg": "#f4f8ff",
-            "nav_bg": "#dce9ff",
-            "card_bg": "#ffffff",
-            "line": "#b9cef0",
-            "ink": "#102a43",
-            "ink_muted": "#486581",
-            "accent": "#0a84ff",
-            "accent_hover": "#0066cc",
-            "accent_soft": "#d3e4ff",
-        }
+        self.theme_mode_var = ctk.StringVar(value="Dark")
+        self.palette = self._palette_for_mode(self.theme_mode_var.get())
 
         self.ui_queue: queue.Queue[tuple[str, object]] = queue.Queue()
         self.worker_thread: threading.Thread | None = None
@@ -222,6 +238,20 @@ class MedidorApp(ctk.CTk):
         self._poll_ui_queue()
         self.protocol("WM_DELETE_WINDOW", self._on_close)
 
+    def _palette_for_mode(self, mode: str) -> dict[str, str]:
+        if str(mode).lower() == "light":
+            return dict(LIGHT_PALETTE)
+        return dict(DARK_PALETTE)
+
+    def _on_theme_change(self, selected_mode: str) -> None:
+        mode = "Light" if str(selected_mode).lower() == "light" else "Dark"
+        self.theme_mode_var.set(mode)
+        ctk.set_appearance_mode("light" if mode == "Light" else "dark")
+        self.palette = self._palette_for_mode(mode)
+        self._apply_visual_theme()
+        self._show_view(self._current_view_name())
+        self._update_hero_status()
+
     def _build_hero(self) -> None:
         hero = ctk.CTkFrame(
             self,
@@ -230,26 +260,30 @@ class MedidorApp(ctk.CTk):
             border_width=1,
             border_color=self.palette["line"],
         )
+        self.hero_frame = hero
         hero.grid(row=0, column=0, padx=14, pady=(14, 8), sticky="ew")
         hero.grid_columnconfigure(0, weight=1)
-        ctk.CTkLabel(
+        self.hero_title_label = ctk.CTkLabel(
             hero,
             text="MEDIDOR CONTROL ROOM",
             font=self.hero_title_font,
             text_color=self.palette["ink"],
-        ).grid(row=0, column=0, padx=14, pady=(10, 0), sticky="w")
-        ctk.CTkLabel(
+        )
+        self.hero_title_label.grid(row=0, column=0, padx=14, pady=(10, 0), sticky="w")
+        self.hero_body_label = ctk.CTkLabel(
             hero,
             text="Desktop telemetry monitor + forecasting workspace.",
             font=self.hero_body_font,
             text_color=self.palette["ink_muted"],
-        ).grid(row=1, column=0, padx=14, pady=(0, 4), sticky="w")
-        ctk.CTkLabel(
+        )
+        self.hero_body_label.grid(row=1, column=0, padx=14, pady=(0, 4), sticky="w")
+        self.hero_status_label = ctk.CTkLabel(
             hero,
             textvariable=self.hero_status_var,
             font=self.hero_body_font,
             text_color=self.palette["accent"],
-        ).grid(row=2, column=0, padx=14, pady=(0, 10), sticky="w")
+        )
+        self.hero_status_label.grid(row=2, column=0, padx=14, pady=(0, 10), sticky="w")
 
     def _update_hero_status(self) -> None:
         self.hero_status_var.set(
@@ -300,6 +334,21 @@ class MedidorApp(ctk.CTk):
                     border_color=self.palette["line"],
                     text_color=self.palette["ink"],
                 )
+            elif isinstance(widget, ctk.CTkLabel):
+                widget.configure(text_color=self.palette["ink"])
+            elif isinstance(widget, ctk.CTkEntry):
+                widget.configure(
+                    fg_color=self.palette["card_bg"],
+                    border_color=self.palette["line"],
+                    text_color=self.palette["ink"],
+                )
+            elif isinstance(widget, ctk.CTkOptionMenu):
+                widget.configure(
+                    fg_color=self.palette["accent_soft"],
+                    button_color=self.palette["accent"],
+                    button_hover_color=self.palette["accent_hover"],
+                    text_color=self.palette["ink"],
+                )
 
         def _walk(widget: object) -> None:
             if hasattr(widget, "winfo_children"):
@@ -308,6 +357,10 @@ class MedidorApp(ctk.CTk):
                     _walk(child)
 
         _walk(self)
+        self.hero_frame.configure(fg_color=self.palette["panel_bg"], border_color=self.palette["line"])
+        self.hero_title_label.configure(text_color=self.palette["ink"])
+        self.hero_body_label.configure(text_color=self.palette["ink_muted"])
+        self.hero_status_label.configure(text_color=self.palette["accent"])
 
     def _build_layout(self) -> None:
         self.grid_columnconfigure(0, weight=1)
@@ -922,6 +975,7 @@ class MedidorApp(ctk.CTk):
         self._refresh_model_registry_table()
         self._update_hero_status()
         self._apply_visual_theme()
+        self._show_view(self._current_view_name())
 
     def _build_settings_form(self, parent: ctk.CTkFrame) -> None:
         form = ctk.CTkFrame(parent, corner_radius=12)
@@ -1000,6 +1054,21 @@ class MedidorApp(ctk.CTk):
             variable=self.storage_var,
             values=["csv", "postgres", "both"],
         ).grid(row=2, column=1, padx=8, pady=(0, 8), sticky="w")
+
+        ctk.CTkLabel(form, text="Theme").grid(
+            row=2,
+            column=1,
+            padx=(140, 8),
+            pady=(0, 8),
+            sticky="w",
+        )
+        ctk.CTkOptionMenu(
+            form,
+            variable=self.theme_mode_var,
+            values=["Dark", "Light"],
+            command=self._on_theme_change,
+            width=120,
+        ).grid(row=2, column=1, padx=(210, 8), pady=(0, 8), sticky="w")
 
         ctk.CTkLabel(form, text="DB host").grid(
             row=3,
@@ -1095,6 +1164,12 @@ class MedidorApp(ctk.CTk):
 
         if view_name == "Regresion":
             self._refresh_regression_scatter_chart()
+
+    def _current_view_name(self) -> str:
+        for name, button in self.view_buttons.items():
+            if str(button.cget("state")) == "disabled":
+                return name
+        return "Monitor"
 
     def _metric_card(
         self,
