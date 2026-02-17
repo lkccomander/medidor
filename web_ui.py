@@ -56,47 +56,77 @@ from train_forecast import (
 MODEL_REGISTRY_PATH = TRAIN_DEFAULT_MODEL_DIR / "model_registry.csv"
 
 
-def apply_frontend_design() -> None:
+def apply_frontend_design(theme_mode: str) -> None:
+    dark_mode = str(theme_mode).lower() == "dark"
+    palette = {
+        "bg_main": "#0c2f62" if dark_mode else "#eaf2ff",
+        "bg_mid": "#0f376f" if dark_mode else "#e2edff",
+        "bg_end": "#184889" if dark_mode else "#f4f8ff",
+        "bg_panel": "#123a75" if dark_mode else "#f5f9ff",
+        "ink": "#eaf2ff" if dark_mode else "#102a43",
+        "ink_soft": "#c7dbf6" if dark_mode else "#486581",
+        "accent": "#65b0ff" if dark_mode else "#0a84ff",
+        "line": "#3e6ba3" if dark_mode else "#bfd4f2",
+        "sidebar_start": "#0f3b78" if dark_mode else "#dce9ff",
+        "sidebar_end": "#0a2f62" if dark_mode else "#eff5ff",
+        "sidebar_text": "#eaf2ff" if dark_mode else "#102a43",
+        "sidebar_input_bg": "rgba(255, 255, 255, 0.1)" if dark_mode else "rgba(255, 255, 255, 0.9)",
+        "sidebar_input_border": "rgba(255, 255, 255, 0.28)" if dark_mode else "#b9cef0",
+        "hero_bg": (
+            "linear-gradient(120deg, rgba(101, 176, 255, 0.18), rgba(43, 121, 208, 0.16) 55%, rgba(18, 58, 117, 0.92))"
+            if dark_mode
+            else "linear-gradient(120deg, rgba(10, 132, 255, 0.13), rgba(29, 95, 209, 0.1) 55%, rgba(255, 255, 255, 0.9))"
+        ),
+        "pill_bg": "rgba(9, 32, 66, 0.6)" if dark_mode else "rgba(245, 249, 255, 0.9)",
+        "tab_bg": "rgba(14, 48, 95, 0.88)" if dark_mode else "rgba(245, 249, 255, 0.7)",
+        "tab_active_bg": "#184889" if dark_mode else "#f5f9ff",
+        "button_border": "#4d82c3" if dark_mode else "#9ec1ef",
+        "button_bg": "linear-gradient(180deg, #1b4f94, #153f79)" if dark_mode else "linear-gradient(180deg, #f8fbff, #e7f1ff)",
+        "button_text": "#eaf2ff" if dark_mode else "#102a43",
+        "card_bg": "rgba(12, 47, 98, 0.62)" if dark_mode else "rgba(245, 249, 255, 0.92)",
+        "shadow": "0 12px 24px rgba(4, 17, 36, 0.35)" if dark_mode else "0 12px 24px rgba(16, 42, 67, 0.08)",
+    }
     st.markdown(
-        """
+        f"""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
 
         :root {
-            --bg-main: #0c2f62;
-            --bg-panel: #123a75;
-            --ink: #eaf2ff;
-            --ink-soft: #c7dbf6;
-            --accent: #65b0ff;
-            --accent-2: #2b79d0;
-            --line: #3e6ba3;
-            --card-shadow: 0 12px 24px rgba(4, 17, 36, 0.35);
+            --bg-main: {palette['bg_main']};
+            --bg-mid: {palette['bg_mid']};
+            --bg-end: {palette['bg_end']};
+            --bg-panel: {palette['bg_panel']};
+            --ink: {palette['ink']};
+            --ink-soft: {palette['ink_soft']};
+            --accent: {palette['accent']};
+            --line: {palette['line']};
+            --card-shadow: {palette['shadow']};
         }
 
         .stApp {
             background:
                 radial-gradient(circle at 12% 18%, rgba(101, 176, 255, 0.16), transparent 38%),
                 radial-gradient(circle at 90% 8%, rgba(43, 121, 208, 0.18), transparent 34%),
-                linear-gradient(140deg, var(--bg-main), #0f376f 44%, #184889 100%);
+                linear-gradient(140deg, var(--bg-main), var(--bg-mid) 44%, var(--bg-end) 100%);
             color: var(--ink);
             font-family: "Source Serif 4", "Times New Roman", serif;
         }
 
         [data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #0f3b78 0%, #0a2f62 100%);
+            background: linear-gradient(180deg, {palette['sidebar_start']} 0%, {palette['sidebar_end']} 100%);
             border-right: 1px solid var(--line);
         }
 
         [data-testid="stSidebar"] * {
-            color: #eaf2ff;
+            color: {palette['sidebar_text']};
         }
 
         [data-testid="stSidebar"] input,
         [data-testid="stSidebar"] textarea,
         [data-testid="stSidebar"] [data-baseweb="select"] > div {
-            background: rgba(255, 255, 255, 0.1) !important;
-            color: #ffffff !important;
-            border-color: rgba(255, 255, 255, 0.28) !important;
+            background: {palette['sidebar_input_bg']} !important;
+            color: {palette['sidebar_text']} !important;
+            border-color: {palette['sidebar_input_border']} !important;
         }
 
         h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
@@ -107,7 +137,7 @@ def apply_frontend_design() -> None:
 
         .medidor-hero {
             border: 1px solid var(--line);
-            background: linear-gradient(120deg, rgba(101, 176, 255, 0.18), rgba(43, 121, 208, 0.16) 55%, rgba(18, 58, 117, 0.92));
+            background: {palette['hero_bg']};
             box-shadow: var(--card-shadow);
             border-radius: 16px;
             padding: 1rem 1.2rem;
@@ -137,7 +167,7 @@ def apply_frontend_design() -> None:
 
         .medidor-pill {
             border: 1px solid var(--line);
-            background: rgba(9, 32, 66, 0.6);
+            background: {palette['pill_bg']};
             color: var(--ink);
             border-radius: 999px;
             padding: 0.35rem 0.72rem;
@@ -155,7 +185,7 @@ def apply_frontend_design() -> None:
         }
 
         .stTabs [data-baseweb="tab"] {
-            background: rgba(14, 48, 95, 0.88);
+            background: {palette['tab_bg']};
             border: 1px solid var(--line);
             border-bottom: 0;
             border-radius: 10px 10px 0 0;
@@ -165,15 +195,15 @@ def apply_frontend_design() -> None:
         }
 
         .stTabs [aria-selected="true"] {
-            background: #184889;
+            background: {palette['tab_active_bg']};
             color: var(--accent);
         }
 
         .stButton > button {
             border-radius: 9px;
-            border: 1px solid #4d82c3;
-            background: linear-gradient(180deg, #1b4f94, #153f79);
-            color: #eaf2ff;
+            border: 1px solid {palette['button_border']};
+            background: {palette['button_bg']};
+            color: {palette['button_text']};
             font-weight: 700;
             transition: all 160ms ease;
             box-shadow: 0 4px 12px rgba(4, 17, 36, 0.35);
@@ -196,7 +226,7 @@ def apply_frontend_design() -> None:
         .stCodeBlock, [data-testid="stDataFrame"], [data-testid="stTextArea"] {
             border-radius: 12px;
             border: 1px solid var(--line);
-            background: rgba(12, 47, 98, 0.62);
+            background: {palette['card_bg']};
         }
         </style>
         """,
@@ -238,6 +268,7 @@ def init_state() -> None:
         "output_path": str(DEFAULT_OUTPUT),
         "timeout_seconds": 20,
         "interval_seconds": 60,
+        "theme_mode": "Dark",
         "storage_mode": "postgres",
         "db_host": DEFAULT_DB_HOST,
         "db_port": DEFAULT_DB_PORT,
@@ -476,6 +507,12 @@ def load_prediction_history(limit: int = 1000) -> tuple[list[dt.datetime], list[
 
 def render_settings() -> None:
     st.sidebar.title("Settings")
+    st.session_state.theme_mode = st.sidebar.selectbox(
+        "Theme",
+        ["Dark", "Light"],
+        index=["Dark", "Light"].index(str(st.session_state.theme_mode)),
+        key="settings_theme_mode",
+    )
     st.session_state.output_path = st.sidebar.text_input(
         "Output CSV",
         st.session_state.output_path,
@@ -910,8 +947,8 @@ def models_tab() -> None:
 def main() -> None:
     st.set_page_config(page_title="MEDIDOR Web UI", layout="wide")
     init_state()
-    apply_frontend_design()
     render_settings()
+    apply_frontend_design(str(st.session_state.theme_mode))
 
     render_hero()
     tab_monitor, tab_results, tab_train, tab_predict, tab_models = st.tabs(
