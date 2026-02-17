@@ -1,0 +1,46 @@
+Project: medidor
+Purpose: Internet speed measurement toolkit (CLI + desktop GUI + web UI) with CSV/PostgreSQL storage and basic forecasting.
+
+Primary language: Python (3.11+)
+Platforms: Windows-first workflows (batch launchers), cross-platform Python scripts.
+
+Key entry points:
+- main.py -> Collect speed samples (download/upload/ping)
+- gui.py -> Desktop app (customtkinter)
+- web_ui.py -> Web app (Streamlit)
+- analyze.py -> CSV cleaning/analysis
+- train_forecast.py -> Model training
+- predict_next.py -> Next-value prediction
+- postgres/import_csv.py -> CSV to PostgreSQL
+- postgres/export_to_csv.py -> PostgreSQL to CSV
+
+Run commands:
+- start_gui.bat
+- start_web.bat
+- python main.py --samples 5 --interval-seconds 60 --timeout 20 --storage csv
+- python analyze.py --input internet_speed_data.csv --rolling-window 5 --output-clean internet_speed_data_clean.csv
+- python train_forecast.py --input internet_speed_data.csv --target download_mbps --horizon 1 --lags 5 --test-size 0.2
+- python predict_next.py --input internet_speed_data.csv --model models/medidor_forecast.joblib
+
+Data and artifacts:
+- Raw CSV: internet_speed_data.csv
+- Clean CSV: internet_speed_data_clean.csv
+- Models: models/
+- Runtime log: app.log
+
+Operational constraints for AI agents:
+- Keep changes small and focused.
+- Preserve existing CLI argument compatibility unless explicitly requested.
+- If argparse interfaces change, update README.md.
+- Avoid adding dependencies unless necessary.
+- Do not commit generated artifacts (logs, trained models, output CSV) unless requested.
+- Validate touched scripts at least with syntax check:
+  python -m py_compile main.py gui.py web_ui.py analyze.py train_forecast.py predict_next.py
+
+Preferred docs for orientation:
+- README.md
+- AGENTS.md
+
+Notes:
+- PostgreSQL usage is optional.
+- If UI seems to fail silently, inspect app.log first.
